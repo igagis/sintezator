@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="res" name="1">
+      <in>main.gui.stob</in>
+    </df>
     <df root="src" name="0">
+      <in>WiredArea.cpp</in>
+      <in>WiredArea.hpp</in>
       <in>main.cpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -14,6 +19,7 @@
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
     <Elem>src</Elem>
+    <Elem>res</Elem>
   </sourceRootList>
   <projectmakefile></projectmakefile>
   <confs>
@@ -45,6 +51,12 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
+      <item path="res/main.gui.stob" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/WiredArea.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/WiredArea.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>

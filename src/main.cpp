@@ -1,5 +1,6 @@
 #include <mordavokne/AppFactory.hpp>
 
+#include "WiredArea.hpp"
 
 class Application : public mordavokne::App{
 public:
@@ -12,14 +13,16 @@ public:
 		
 //		morda::inst().resMan.mountResPack(*this->createResourceFileInterface("res/"));
 		
-//		auto c = morda::Morda::inst().inflater.inflate(
-//				*this->createResourceFileInterface("res/main.gui.stob")
-//			);
-//		morda::Morda::inst().setRootWidget(c);
+		morda::inst().inflater.addWidget<WiredArea>("WiredArea");
+		morda::inst().inflater.addWidget<WiredArea::WireSocket>("WireSocket");
 		
+		auto c = morda::Morda::inst().inflater.inflate(
+				*this->createResourceFileInterface("res/main.gui.stob")
+			);		
 		
 		morda::Morda::inst().setRootWidget(
-				morda::inst().inflater.inflate(*stob::parse("PushButton{TextLabel{text{Hello}}}"))
+//				morda::inst().inflater.inflate(*stob::parse("PushButton{TextLabel{text{Hello}}}"))
+				std::move(c)
 			);
 	}
 };
