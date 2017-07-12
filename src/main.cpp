@@ -21,7 +21,6 @@ public:
 			);		
 		
 		morda::Morda::inst().setRootWidget(
-//				morda::inst().inflater.inflate(*stob::parse("PushButton{TextLabel{text{Hello}}}"))
 				std::move(c)
 			);
 	}

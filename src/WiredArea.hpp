@@ -5,6 +5,15 @@
 
 
 class WiredArea : public morda::Container{
+	struct Wire {
+		morda::Vec2r begin;
+		morda::Vec2r end;
+
+		//TODO:
+	};
+
+	std::vector<Wire> wires;
+
 public:
 	WiredArea(const WiredArea&) = delete;
 	WiredArea& operator=(const WiredArea&) = delete;
@@ -13,15 +22,28 @@ public:
 	
 	class WireSocket : virtual public morda::Widget{
 	public:
-		enum class WireOut_e {
+		enum class Outlet_e {
 			LEFT,
 			RIGHT,
 			TOP,
 			BOTTOM,
 			CENTER
 		};
+
+		enum class InOut_e {
+			IN,
+			OUT,
+			INOUT
+		};
 	private:
-		WireOut_e wireOut_v;
+		Outlet_e outlet_v;
+
+		InOut_e inOut_v;
+
+		unsigned type;
+
+		std::weak_ptr<WireSocket> connection;
+		
 	public:
 		WireSocket(const WireSocket&) = delete;
 		WireSocket& operator=(const WireSocket&) = delete;
@@ -31,13 +53,15 @@ public:
 		/**
 		 * @brief Alignment of wire out.
 		 */
-		decltype(wireOut_v) wireOut()const noexcept {
-			return this->wireOut_v;
+		decltype(outlet_v) outlet()const noexcept {
+			return this->outlet_v;
 		}
 
-		void setWireOut(decltype(wireOut_v) wo) {
-			this->wireOut_v = wo;
+		void setOutlet(decltype(outlet_v) o) {
+			this->outlet_v = o;
 		}
+
+		void connect(const std::shared_ptr<WireSocket>& o = nullptr);
 	};
 	
 private:

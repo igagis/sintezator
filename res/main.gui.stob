@@ -1,3 +1,53 @@
 WiredArea{
-
+	
+	Window{
+		title{Hello}
+		dx{100} dy{100}
+		x{10} y{10}
+		
+		VerticalArea{
+			layout{dx{fill} dy{fill}}
+			
+			Frame{
+				TextLabel{
+					text{in1}
+				}
+				WireSocket{
+					layout{dx{fill} dy{fill}}
+				}
+			}
+			TextLabel{
+				text{in2}
+			}
+			TextLabel{
+				text{out1}
+			}
+			TextLabel{
+				text{out2}
+			}
+		}
+	}
+	
+	Window{
+		title{Hello}
+		dx{100} dy{100}
+		x{200} y{200}
+		
+		VerticalArea{
+			layout{dx{fill} dy{fill}}
+			
+			TextLabel{
+				text{in1}
+			}
+			TextLabel{
+				text{in2}
+			}
+			TextLabel{
+				text{out1}
+			}
+			TextLabel{
+				text{out2}
+			}
+		}
+	}
 }
