@@ -2,7 +2,7 @@ WiredArea{
 	
 	defs{
 		Socket{ text
-			Frame{
+			Pile{
 				TextLabel{
 					text{@{text}}
 				}
@@ -18,7 +18,7 @@ WiredArea{
 		dx{100} dy{100}
 		x{10} y{10}
 		
-		VerticalArea{
+		Column{
 			layout{dx{fill} dy{fill}}
 			
 			
@@ -42,7 +42,7 @@ WiredArea{
 		dx{100} dy{100}
 		x{200} y{200}
 		
-		VerticalArea{
+		Column{
 			layout{dx{fill} dy{fill}}
 			
 			Socket{
