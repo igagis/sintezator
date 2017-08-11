@@ -2,7 +2,7 @@
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="res" name="0">
-      <in>main.gui.stob</in>
+      <in>main.gui</in>
     </df>
     <df root="src" name="1">
       <in>WiredArea.cpp</in>
@@ -52,7 +52,7 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="res/main.gui.stob" ex="false" tool="3" flavor2="0">
+      <item path="res/main.gui" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/WiredArea.cpp" ex="false" tool="1" flavor2="0">
       </item>

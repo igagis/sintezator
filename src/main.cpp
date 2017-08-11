@@ -9,15 +9,15 @@ public:
 					return mordavokne::App::WindowParams(kolme::Vec2ui(320, 480));
 				}())
 	{
-		morda::inst().initStandardWidgets(*this->createResourceFileInterface());
+		morda::inst().initStandardWidgets(*this->getResFile());
 		
-//		morda::inst().resMan.mountResPack(*this->createResourceFileInterface("res/"));
+//		morda::inst().resMan.mountResPack(*this->gerresFile("res/"));
 		
 		morda::inst().inflater.addWidget<WiredArea>("WiredArea");
 		morda::inst().inflater.addWidget<WiredArea::WireSocket>("WireSocket");
 		
 		auto c = morda::Morda::inst().inflater.inflate(
-				*this->createResourceFileInterface("res/main.gui.stob")
+				*this->getResFile("res/main.gui")
 			);		
 		
 		morda::Morda::inst().setRootWidget(
