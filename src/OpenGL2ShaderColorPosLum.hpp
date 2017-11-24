@@ -14,6 +14,6 @@ public:
 	OpenGL2ShaderColorPosLum(const OpenGL2ShaderColorPosLum&) = delete;
 	OpenGL2ShaderColorPosLum& operator=(const OpenGL2ShaderColorPosLum&) = delete;
 	
-	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color) override;
+	void render(const kolme::Matr4f& m, const morda::VertexArray& va, kolme::Vec4f color)const override;
 };
 

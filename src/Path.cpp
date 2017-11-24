@@ -1,10 +1,6 @@
 #include "Path.hpp"
 
-Path::Path(morda::Vec2r firstPoint) {
-	this->path.emplace_back(firstPoint);
-}
-
-void Path::lineTo(morda::Vec2r absPos) {
+void Path::to(morda::Vec2r absPos) {
 	this->path.emplace_back(absPos);
 }
 

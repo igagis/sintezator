@@ -1,6 +1,8 @@
 #include "WiredArea.hpp"
+#include "Path.hpp"
 
 #include <morda/util/util.hpp>
+#include <morda/Morda.hpp>
 
 WiredArea::WiredArea(const stob::Node* chain) :
 		Widget(chain),
@@ -43,4 +45,26 @@ void WiredArea::WireSocket::connect(const std::shared_ptr<WiredArea::WireSocket>
 
 	this->connection = o;
 	o->connection = this->sharedFromThis(this);
+}
+
+void WiredArea::render(const morda::Matr4r& matrix) const {
+	Path p;
+	
+	p.to(0);
+	p.to(morda::Vec2r(50, 100));
+	
+	auto v = p.stroke(5, 3);
+	
+	auto vba = morda::inst().renderer().factory->createVertexArray(
+			{{
+				morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos)),
+				morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.alpha))
+			}},
+			morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.indices)),
+			morda::VertexArray::Mode_e::TRIANGLE_STRIP
+		);
+	
+	this->shaderColorPosLum.render(matrix, *vba, 0xff00ff00);
+	
+	this->Container::render(matrix);
 }

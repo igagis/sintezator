@@ -2,7 +2,7 @@
 
 #include <morda/widgets/core/container/Container.hpp>
 
-
+#include "OpenGL2ShaderColorPosLum.hpp"
 
 class WiredArea : public morda::Container{
 	struct Wire {
@@ -14,6 +14,8 @@ class WiredArea : public morda::Container{
 
 	std::vector<Wire> wires;
 
+	OpenGL2ShaderColorPosLum shaderColorPosLum;
+	
 public:
 	WiredArea(const WiredArea&) = delete;
 	WiredArea& operator=(const WiredArea&) = delete;
@@ -64,6 +66,8 @@ public:
 		void connect(const std::shared_ptr<WireSocket>& o = nullptr);
 	};
 	
+	void render(const morda::Matr4r& matrix) const override;
+
 private:
 
 };

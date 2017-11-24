@@ -1,16 +1,9 @@
 #include <mordavokne/AppFactory.hpp>
 
-#include "OpenGL2ShaderColorPosLum.hpp"
-
 #include "WiredArea.hpp"
 
-class Application :
-		public mordavokne::App,
-		public utki::Singleton<Application>
-{
+class Application : public mordavokne::App{
 public:
-	OpenGL2ShaderColorPosLum shaderColorPosLum;
-	
 	Application() :
 			App([](){
 					return mordavokne::App::WindowParams(kolme::Vec2ui(320, 480));
