@@ -5,6 +5,8 @@
       <in>main.gui</in>
     </df>
     <df root="src" name="1">
+      <in>OpenGL2ShaderColorPosLum.cpp</in>
+      <in>OpenGL2ShaderColorPosLum.hpp</in>
       <in>Path.cpp</in>
       <in>Path.hpp</in>
       <in>WiredArea.cpp</in>
@@ -55,6 +57,10 @@
         </preBuild>
       </makefileType>
       <item path="res/main.gui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/OpenGL2ShaderColorPosLum.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/OpenGL2ShaderColorPosLum.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Path.cpp" ex="false" tool="1" flavor2="0">
       </item>

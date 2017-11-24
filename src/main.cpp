@@ -1,9 +1,16 @@
 #include <mordavokne/AppFactory.hpp>
 
+#include "OpenGL2ShaderColorPosLum.hpp"
+
 #include "WiredArea.hpp"
 
-class Application : public mordavokne::App{
+class Application :
+		public mordavokne::App,
+		public utki::Singleton<Application>
+{
 public:
+	OpenGL2ShaderColorPosLum shaderColorPosLum;
+	
 	Application() :
 			App([](){
 					return mordavokne::App::WindowParams(kolme::Vec2ui(320, 480));
@@ -11,7 +18,7 @@ public:
 	{
 		morda::inst().initStandardWidgets(*this->getResFile());
 		
-//		morda::inst().resMan.mountResPack(*this->gerresFile("res/"));
+//		morda::inst().resMan.mountResPack(*this->getResFile("res/"));
 		
 		morda::inst().inflater.addWidget<WiredArea>("WiredArea");
 		morda::inst().inflater.addWidget<WiredArea::WireSocket>("WireSocket");
