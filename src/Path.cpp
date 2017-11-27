@@ -6,7 +6,7 @@ void Path::to(morda::Vec2r absPos) {
 
 
 
-Path::Vertices Path::stroke(morda::real width, morda::real antiAliasWidth) {
+Path::Vertices Path::stroke(morda::real halfWidth, morda::real antiAliasWidth) {
 	Vertices ret;
 
 	if(this->path.size() <= 1){
@@ -53,18 +53,16 @@ Path::Vertices Path::stroke(morda::real width, morda::real antiAliasWidth) {
 		
 		auto normal = (prevNormal + nextNormal).normalize();
 		
-		auto miter = width / (2 * (normal * prevNormal));
+		auto miter = halfWidth / (normal * prevNormal);
 		
-		ret.pos.push_back((*cur) - normal * miter);
 		ret.pos.push_back((*cur) + normal * miter);
+		ret.pos.push_back((*cur) - normal * miter);
 		
 		ret.inIndices.push_back(inIndex);
 		++inIndex;
 		ret.inIndices.push_back(inIndex);
 		++inIndex;
 	}
-			
-	//TODO:
 	
 	return ret;
 }
