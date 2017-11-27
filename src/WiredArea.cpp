@@ -50,21 +50,26 @@ void WiredArea::WireSocket::connect(const std::shared_ptr<WiredArea::WireSocket>
 void WiredArea::render(const morda::Matr4r& matrix) const {
 	Path p;
 	
-	p.to(0);
+	p.to(10);
+//	p.to(10, 20);
+//	p.to(10);
 	p.to(morda::Vec2r(50, 100));
+	p.to(morda::Vec2r(100, 50));
 	
-	auto v = p.stroke(5, 3);
+	auto v = p.stroke(8, 3);
 	
 	auto vba = morda::inst().renderer().factory->createVertexArray(
 			{{
 				morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos)),
-				morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.alpha))
+//				morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.alpha)),
 			}},
-			morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.indices)),
+			morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.inIndices)),
 			morda::VertexArray::Mode_e::TRIANGLE_STRIP
 		);
 	
-	this->shaderColorPosLum.render(matrix, *vba, 0xff00ff00);
+	morda::inst().renderer().shader->colorPos->render(matrix, *vba, 0xff00ff00);
+	
+//	this->shaderColorPosLum.render(matrix, *vba, 0xff00ff00);
 	
 	this->Container::render(matrix);
 }
