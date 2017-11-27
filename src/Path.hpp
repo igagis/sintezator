@@ -25,5 +25,5 @@ public:
 		std::vector<std::uint16_t> outIndices;
 	};
 	
-	Vertices stroke(morda::real halfWidth = morda::real(0.5), morda::real antiAliasWidth = morda::real(1));
+	Vertices stroke(morda::real halfWidth = morda::real(0.5), morda::real antialiasWidth = morda::real(1))const;
 };

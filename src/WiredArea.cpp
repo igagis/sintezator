@@ -56,13 +56,14 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 	p.to(morda::Vec2r(50, 100));
 	p.to(morda::Vec2r(100, 50));
 	
-	auto v = p.stroke(2, 3);
+	auto v = p.stroke(2, 1.5);
 	
 	glEnable(GL_CULL_FACE);
 	{
 		auto vba = morda::inst().renderer().factory->createVertexArray(
 				{{
-					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos))
+					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos)),
+//					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.alpha)),
 				}},
 				morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.inIndices)),
 				morda::VertexArray::Mode_e::TRIANGLE_STRIP
@@ -71,18 +72,18 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 		morda::inst().renderer().shader->colorPos->render(matrix, *vba, 0xff00ff00);
 	}
 	
-//	{
-//		auto vba = morda::inst().renderer().factory->createVertexArray(
-//				{{
-//					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos)),
-//					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.alpha)),
-//				}},
-//				morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.outIndices)),
-//				morda::VertexArray::Mode_e::TRIANGLE_STRIP
-//			);
-//
-//		this->shaderColorPosLum.render(matrix, *vba, 0xff00ff00);
-//	}
+	{
+		auto vba = morda::inst().renderer().factory->createVertexArray(
+				{{
+					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos)),
+					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.alpha)),
+				}},
+				morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.outIndices)),
+				morda::VertexArray::Mode_e::TRIANGLE_STRIP
+			);
+
+		this->shaderColorPosLum.render(matrix, *vba, 0xff00ff00);
+	}
 	
 	this->Container::render(matrix);
 }

@@ -29,12 +29,12 @@ OpenGL2ShaderColorPosLum::OpenGL2ShaderColorPosLum() :
 						#	define lowp
 						#endif
 		
-						uniform highp vec4 uniformColor;
+						uniform lowp vec4 uniformColor;
 		
 						varying highp float lum;
 		
 						void main(void){
-							gl_FragColor = uniformColor * lum;
+							gl_FragColor = vec4(uniformColor.x, uniformColor.y, uniformColor.z, uniformColor.w * lum);
 						}
 					)qwertyuiop"
 			)
