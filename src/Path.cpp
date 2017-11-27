@@ -23,32 +23,33 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antiAliasWidth) {
 		{
 			auto ii = i;
 			++ii;
-			next = ii == this->path.end() ? nullptr : &(*ii);
+			if(ii == this->path.end()){
+				next = nullptr;
+			}else{
+				next = &(*ii);
+			}
 		}
 		
 		morda::Vec2r prevNormal, nextNormal;
 		
 		ASSERT(prev || next)
 		
-		if(!prev){
-			ASSERT(next)
-			nextNormal = (*next - *cur).normalize();
-			std::swap(nextNormal.x, nextNormal.y);
-			nextNormal.x = -nextNormal.x;
-			prevNormal = nextNormal;
-		}else{
+		if(prev){
 			prevNormal = (*cur - *prev).normalize();
 			std::swap(prevNormal.x, prevNormal.y);
 			prevNormal.x = -prevNormal.x;
-			
-			if(!next){
-				ASSERT(prev)
-				nextNormal = prevNormal;
-			}else{
-				nextNormal = (*next - *cur).normalize();
-				std::swap(nextNormal.x, nextNormal.y);
-				nextNormal.x = -nextNormal.x;
-			}
+		}
+		if(next){
+			nextNormal = (*next - *cur).normalize();
+			std::swap(nextNormal.x, nextNormal.y);
+			nextNormal.x = -nextNormal.x;
+		}else{
+			ASSERT(prev)
+			nextNormal = prevNormal;
+		}
+		if(!prev){
+			ASSERT(next)
+			prevNormal = nextNormal;
 		}
 		
 		auto normal = (prevNormal + nextNormal).normalize();
