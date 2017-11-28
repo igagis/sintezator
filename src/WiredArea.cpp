@@ -63,7 +63,6 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 		auto vba = morda::inst().renderer().factory->createVertexArray(
 				{{
 					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos)),
-//					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.alpha)),
 				}},
 				morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.inIndices)),
 				morda::VertexArray::Mode_e::TRIANGLE_STRIP
