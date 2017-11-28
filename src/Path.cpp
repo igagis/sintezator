@@ -2,8 +2,13 @@
 
 #include "Path.hpp"
 
-void Path::to(morda::Vec2r absPos) {
+void Path::lineTo(morda::Vec2r absPos) {
 	this->path.emplace_back(absPos);
+}
+
+void Path::lineBy(morda::Vec2r relPos) {
+	ASSERT(this->path.size() != 0)
+	this->lineTo(this->path.back() + relPos);
 }
 
 

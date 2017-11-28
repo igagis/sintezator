@@ -50,11 +50,11 @@ void WiredArea::WireSocket::connect(const std::shared_ptr<WiredArea::WireSocket>
 void WiredArea::render(const morda::Matr4r& matrix) const {
 	Path p;
 	
-	p.to(10);
-	p.to(10, 20);
+	p.lineTo(10);
+	p.lineTo(10, 20);
 //	p.to(10);
-	p.to(morda::Vec2r(50, 100));
-	p.to(morda::Vec2r(100, 50));
+	p.lineTo(morda::Vec2r(50, 100));
+	p.lineTo(morda::Vec2r(100, 50));
 	
 	auto v = p.stroke(2);
 	
