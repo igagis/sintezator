@@ -51,12 +51,12 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 	Path p;
 	
 	p.to(10);
-//	p.to(10, 20);
+	p.to(10, 20);
 //	p.to(10);
 	p.to(morda::Vec2r(50, 100));
 	p.to(morda::Vec2r(100, 50));
 	
-	auto v = p.stroke(2, 1.5);
+	auto v = p.stroke(2);
 	
 	glEnable(GL_CULL_FACE);
 	{

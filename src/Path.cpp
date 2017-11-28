@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Path.hpp"
 
 void Path::to(morda::Vec2r absPos) {
@@ -58,7 +60,14 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth)co
 		auto miter = miterCoeff * halfWidth;
 		auto antialiasMiter = miterCoeff * (halfWidth + antialiasWidth);
 		
-		ret.pos.push_back((*cur) + normal * antialiasMiter);
+		if(!prev){
+			ret.pos.push_back((*cur) + normal * miter + normal.rotation(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+		}else if(!next){
+			ret.pos.push_back((*cur) + normal * miter + normal.rotation(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+		}else{
+			ret.pos.push_back((*cur) + normal * antialiasMiter);
+		}
+		
 		ret.alpha.push_back(0);
 		++inIndex;
 		
@@ -72,15 +81,34 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth)co
 		ret.inIndices.push_back(inIndex);
 		++inIndex;
 		
-		ret.pos.push_back((*cur) - normal * antialiasMiter);
+		if(!prev){
+			ASSERT(next)
+			ret.pos.push_back((*cur) - normal * miter - normal.rotation(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+		}else if(!next){
+			ASSERT(prev)
+			ret.pos.push_back((*cur) - normal * miter - normal.rotation(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+		}else{
+			ret.pos.push_back((*cur) - normal * antialiasMiter);
+		}
 		ret.alpha.push_back(0);
 		++inIndex;
 	}
+	
+	ret.outIndices.push_back(3);
+	ret.outIndices.push_back(2);
 	
 	for(unsigned i = 0; i != this->path.size(); ++i){
 		ret.outIndices.push_back(4 * i);
 		ret.outIndices.push_back(4 * i + 1);
 	}
+	
+	for(unsigned i = this->path.size() - 1; i != 0; --i){
+		ret.outIndices.push_back(4 * i + 3);
+		ret.outIndices.push_back(4 * i + 2);
+	}
+	
+	ret.outIndices.push_back(3);
+	ret.outIndices.push_back(2);
 	
 	return ret;
 }
