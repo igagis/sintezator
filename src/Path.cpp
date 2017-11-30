@@ -17,18 +17,62 @@ void Path::cubicBy(morda::Vec2r relP1, morda::Vec2r relP2, morda::Vec2r relP3) {
 	this->cubicTo(d + relP1, d + relP2, d + relP3);
 }
 
+namespace kolme{
+template <class T> Vector2<T> sqrt(const Vector2<T>& v){
+	using std::sqrt;
+	return Vector2<T>(sqrt(v.x), sqrt(v.y));
+}
+
+template <class T> Vector2<T> min(const Vector2<T>& v1, const Vector2<T>& v2){
+	using std::min;
+	return Vector2<T>(min(v1.x, v2.x), min(v1.y, v2.y));
+}
+}
+
 void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
-//	auto p0 = this->path.back();
-	// B(t) = (1-t)^3 * P0 + 3t(1-t)^2 * P1 + 3t^2(1-t) * P2 + t^3 * P3
+	auto p0 = this->path.back();
+
+	auto B = [p0, p1, p2, p3](morda::real t){
+		using utki::pow3;
+		using utki::pow2;
+		return pow3(1 - t) * p0 + 3 * t * pow2(1 - t) * p1 + 3 * pow2(t) * (1 - t) * p2 + pow3(t) * p3;
+	};
 	
-	// B'(t) = -3(1-t)^2 * P0 + 3 * P1 - 6t * P1 + 3t^2 * P1 + 3t * P2 + 3t^2 * P3
-//	auto dBdt = [p0, p1, p2, p3](morda::real t){
-//		return -3 * utki::pow2(morda::real(1) - t) * p0 + 3 * p1 - 6 * t * p1 + 3 * utki::pow2(t) * p1 + 3 * t * p2 + 3 * utki::pow2(t) * p3;
-//	};
+	auto dBdt = [p0, p1, p2, p3](morda::Vec2r t){
+		return (-3 * p0 + 3 * p1 -6 * p2 + 3 * p3).compMul(t).compMul(t) + (6 * p0 - 6 * p1 + 3 * p2).compMul(t) + (-3 * p0 + 3 * p1);
+	};
 	
-	//TODO:
+	auto a = -3 * p0 + 3 * p1 -6 * p2 + 3 * p3;
+	auto b = 6 * p0 - 6 * p1 + 3 * p2;
+	auto c = -3 * p0 + 3 * p1;
 	
+	auto D = b.compMul(b) - 4 * a.compMul(c);
 	
+	using std::sqrt;
+	
+	//dBdt roots
+	auto t1 = (-b + sqrt(D)).compDiv(2 * a);
+	auto t2 = (-b - sqrt(D)).compDiv(2 * a);
+	
+	auto tExt = -b.compDiv(2 * a);
+	
+	auto dBdtMin = dBdt(tExt); //dBdt extremum
+	
+	using std::min;
+	
+	dBdtMin = min(dBdtMin, dBdt(t1));
+	dBdtMin = min(dBdtMin, dBdt(t2));
+	dBdtMin = min(dBdtMin, dBdt(0));
+	dBdtMin = min(dBdtMin, dBdt(1));
+	
+	using std::max;
+	
+	auto dt = max(dBdtMin.x, dBdtMin.y);
+	
+	for(morda::real t = 0; t < 1; t += dt){
+		this->lineTo(B(t));
+	}
+	this->lineTo(B(1));
 }
 
 
