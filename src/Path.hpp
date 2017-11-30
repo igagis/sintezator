@@ -17,6 +17,9 @@ public:
 		this->lineTo(morda::Vec2r(x, y));
 	}
 	
+	void cubicTo(morda::Vec2r absP1, morda::Vec2r absP2, morda::Vec2r absP3);
+	void cubicBy(morda::Vec2r relP1, morda::Vec2r relP2, morda::Vec2r relP3);
+	
 	void lineBy(morda::Vec2r relPos);
 	
 	struct Vertices{
@@ -27,5 +30,5 @@ public:
 		std::vector<std::uint16_t> outIndices;
 	};
 	
-	Vertices stroke(morda::real halfWidth = morda::real(0.5), morda::real antialiasWidth = morda::real(1.5f))const;
+	Vertices stroke(morda::real halfWidth = morda::real(0.5f), morda::real antialiasWidth = morda::real(1.0f), morda::real antialiasAlpha = morda::real(0.35f))const;
 };

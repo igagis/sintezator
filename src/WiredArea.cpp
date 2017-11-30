@@ -48,6 +48,8 @@ void WiredArea::WireSocket::connect(const std::shared_ptr<WiredArea::WireSocket>
 }
 
 void WiredArea::render(const morda::Matr4r& matrix) const {
+	this->Container::render(matrix);
+	
 	Path p;
 	
 	p.lineTo(10);
@@ -56,7 +58,7 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 	p.lineTo(morda::Vec2r(50, 100));
 	p.lineTo(morda::Vec2r(100, 50));
 	
-	auto v = p.stroke(2);
+	auto v = p.stroke(2.5);
 	
 	glEnable(GL_CULL_FACE);
 	{
@@ -83,6 +85,4 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 
 		this->shaderColorPosLum.render(matrix, *vba, 0xff00ff00);
 	}
-	
-	this->Container::render(matrix);
 }
