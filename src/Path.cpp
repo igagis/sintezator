@@ -114,7 +114,7 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 		t1.y = y[1];
 	}
 	
-	TRACE(<< "t1 = " << t0 << ", t2 = " << t1 << std::endl)
+	TRACE(<< "t0 = " << t0 << ", t1 = " << t1 << std::endl)
 	
 	for(unsigned i = 0; i != t0.size(); ++i){
 		using std::isnan;
@@ -146,7 +146,7 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	
 	morda::real minVel = max(absDiffBezierMin.x, absDiffBezierMin.y);
 	
-	TRACE(<< "minVel = " << minVel)
+	TRACE(<< "minVel = " << minVel << std::endl)
 	
 	if(minVel > 0){
 		const morda::real minStep_c = 1.4f;
