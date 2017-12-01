@@ -32,6 +32,11 @@ template <class T> Vector2<T> max(const Vector2<T>& v1, const Vector2<T>& v2){
 	using std::max;
 	return Vector2<T>(max(v1.x, v2.x), max(v1.y, v2.y));
 }
+
+template <class T> Vector2<T> abs(const Vector2<T>& v){
+	using std::abs;
+	return Vector2<T>(abs(v.x), abs(v.y));
+}
 }
 
 void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
@@ -44,7 +49,9 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	};
 	
 	auto dBdt = [p0, p1, p2, p3](morda::Vec2r t){
-		return (-3 * p0 + 3 * p1 -6 * p2 + 3 * p3).compMul(t).compMul(t) + (6 * p0 - 6 * p1 + 3 * p2).compMul(t) + (-3 * p0 + 3 * p1);
+		auto ret = (-3 * p0 + 3 * p1 -6 * p2 + 3 * p3).compMul(t).compMul(t) + (6 * p0 - 6 * p1 + 3 * p2).compMul(t) + (-3 * p0 + 3 * p1);
+		using std::abs;
+		return abs(ret);
 	};
 	
 	auto a = -3 * p0 + 3 * p1 -6 * p2 + 3 * p3;
@@ -67,8 +74,7 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 			t1[i] = 0;
 		}
 	}
-	t1 = min(t1, morda::Vec2r(1));
-	t1 = max(t1, morda::Vec2r(0));
+	t1 = max(morda::Vec2r(0), min(t1, morda::Vec2r(1)));
 	
 	for(unsigned i = 0; i != t2.size(); ++i){
 		using std::isnan;
@@ -76,20 +82,18 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 			t2[i] = 0;
 		}
 	}
-	t2 = min(t2, morda::Vec2r(1));
-	t2 = max(t2, morda::Vec2r(0));
+	t2 = max(morda::Vec2r(0), min(t2, morda::Vec2r(1)));
 	
 	auto tExt = -b.compDiv(2 * a);
 	
-	auto dBdtMin = dBdt(tExt); //dBdt extremum
+	auto dBdtMin = abs(dBdt(tExt)); //dBdt extremum
 	
 	dBdtMin = min(dBdtMin, dBdt(t1));
 	dBdtMin = min(dBdtMin, dBdt(t2));
 	dBdtMin = min(dBdtMin, dBdt(0));
 	dBdtMin = min(dBdtMin, dBdt(1));
 	
-	//TODO:
-//	auto dt = max(dBdtMin.x, dBdtMin.y);
+	auto dt = 1.4 / max(dBdtMin.x, dBdtMin.y);
 	
 	for(morda::real t = 0; t < 1; t += dt){
 		this->lineTo(B(t));
