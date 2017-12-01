@@ -39,6 +39,29 @@ template <class T> Vector2<T> abs(const Vector2<T>& v){
 }
 }
 
+namespace{
+std::array<morda::real, 2> solveSquareEquation(morda::real a, morda::real b, morda::real c){
+	std::array<morda::real, 2> x;
+	
+	using utki::pow2;
+	using std::sqrt;
+	using std::numeric_limits;
+	
+	auto D = pow2(b) - 4 * a * c;
+	
+	if(D < 0){
+		x[0] = std::nanf("");
+		x[1] = x[0];
+		return x;
+	}
+	
+	x[0] = (-b + sqrt(D)) / 2 * a;
+	x[1] = (-b - sqrt(D)) / 2 * a;
+	
+	return x;
+}
+}
+
 void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	auto p0 = this->path.back();
 
@@ -58,17 +81,30 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 		return a.compMul(t).compMul(t) + b.compMul(t) + c;
 	};
 	
-	auto D = b.compMul(b) - 4 * a.compMul(c);
-	
 	using std::sqrt;
 	using std::min;
 	using std::max;
 	
 	//dBezier roots
-	auto t1 = (-b + sqrt(D)).compDiv(2 * a);
-	auto t2 = (-b - sqrt(D)).compDiv(2 * a);
+	morda::Vec2r t0, t1;
+	{
+		auto x = solveSquareEquation(a.x, b.x, c.x);
+		auto y = solveSquareEquation(a.y, b.y, c.y);
+		t0.x = x[0];
+		t0.y = y[0];
+		t1.x = x[1];
+		t1.y = y[1];
+	}
 	
-	TRACE(<< "t1 = " << t1 << ", t2 = " << t2 << std::endl)
+	TRACE(<< "t1 = " << t0 << ", t2 = " << t1 << std::endl)
+	
+	for(unsigned i = 0; i != t0.size(); ++i){
+		using std::isnan;
+		if(isnan(t0[i])){
+			t0[i] = 0;
+		}
+	}
+	t0 = max(morda::Vec2r(0), min(t0, morda::Vec2r(1)));
 	
 	for(unsigned i = 0; i != t1.size(); ++i){
 		using std::isnan;
@@ -78,14 +114,6 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	}
 	t1 = max(morda::Vec2r(0), min(t1, morda::Vec2r(1)));
 	
-	for(unsigned i = 0; i != t2.size(); ++i){
-		using std::isnan;
-		if(isnan(t2[i])){
-			t2[i] = 0;
-		}
-	}
-	t2 = max(morda::Vec2r(0), min(t2, morda::Vec2r(1)));
-	
 	auto tExt = -b.compDiv(2 * a); //extremum position
 	tExt = max(morda::Vec2r(0), min(tExt, morda::Vec2r(1)));
 	
@@ -93,8 +121,8 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	
 	auto absDiffBezierMin = abs(diffBezier(tExt)); //extremum value
 	
+	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(t0)));
 	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(t1)));
-	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(t2)));
 	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(0)));
 	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(1)));
 	
