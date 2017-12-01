@@ -73,8 +73,8 @@ std::array<morda::real, 2> solveSquareEquation(morda::real a, morda::real b, mor
 		return x;
 	}
 	
-	x[0] = (-b + sqrt(D)) / 2 * a;
-	x[1] = (-b - sqrt(D)) / 2 * a;
+	x[0] = (-b + sqrt(D)) / (2 * a);
+	x[1] = (-b - sqrt(D)) / (2 * a);
 	
 	return x;
 }
