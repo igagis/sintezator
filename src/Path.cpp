@@ -49,7 +49,7 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	};
 	
 	auto dBezier = [p0, p1, p2, p3](morda::Vec2r t){
-		auto ret = (-3 * p0 + 3 * p1 -6 * p2 + 3 * p3).compMul(t).compMul(t) + (6 * p0 - 6 * p1 + 3 * p2).compMul(t) + (-3 * p0 + 3 * p1);
+		auto ret = (-3 * p0 + 3 * p1 - 6 * p2 + 3 * p3).compMul(t).compMul(t) + (6 * p0 - 6 * p1 + 3 * p2).compMul(t) + (-3 * p0 + 3 * p1);
 		using std::abs;
 		return abs(ret);
 	};
