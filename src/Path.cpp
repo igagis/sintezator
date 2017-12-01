@@ -42,13 +42,13 @@ template <class T> Vector2<T> abs(const Vector2<T>& v){
 void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	auto p0 = this->path.back();
 
-	auto B = [p0, p1, p2, p3](morda::real t){
+	auto bezier = [p0, p1, p2, p3](morda::real t){
 		using utki::pow3;
 		using utki::pow2;
 		return pow3(1 - t) * p0 + 3 * t * pow2(1 - t) * p1 + 3 * pow2(t) * (1 - t) * p2 + pow3(t) * p3;
 	};
 	
-	auto dBdt = [p0, p1, p2, p3](morda::Vec2r t){
+	auto dBezier = [p0, p1, p2, p3](morda::Vec2r t){
 		auto ret = (-3 * p0 + 3 * p1 -6 * p2 + 3 * p3).compMul(t).compMul(t) + (6 * p0 - 6 * p1 + 3 * p2).compMul(t) + (-3 * p0 + 3 * p1);
 		using std::abs;
 		return abs(ret);
@@ -84,30 +84,30 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	}
 	t2 = max(morda::Vec2r(0), min(t2, morda::Vec2r(1)));
 	
-	auto tExt = -b.compDiv(2 * a);
+	auto tExt = -b.compDiv(2 * a); //extremum position
 	tExt = max(morda::Vec2r(0), min(tExt, morda::Vec2r(1)));
 	
-	auto dBdtMin = abs(dBdt(tExt)); //dBdt extremum
+	auto dBezierExt = abs(dBezier(tExt)); //extremum value
 	
-	dBdtMin = min(dBdtMin, dBdt(t1));
-	dBdtMin = min(dBdtMin, dBdt(t2));
-	dBdtMin = min(dBdtMin, dBdt(0));
-	dBdtMin = min(dBdtMin, dBdt(1));
+	dBezierExt = min(dBezierExt, dBezier(t1));
+	dBezierExt = min(dBezierExt, dBezier(t2));
+	dBezierExt = min(dBezierExt, dBezier(0));
+	dBezierExt = min(dBezierExt, dBezier(1));
 	
-	morda::real minVel = max(dBdtMin.x, dBdtMin.y);
+	morda::real minVel = max(dBezierExt.x, dBezierExt.y);
 	
 	if(minVel > 0){
 		const morda::real minStep_c = 1.4f;
 		auto dt = minStep_c / minVel;
 		
 		for(morda::real t = 0; t < 1; t += dt){
-			this->lineTo(B(t));
+			this->lineTo(bezier(t));
 		}
-		this->lineTo(B(1));
+		this->lineTo(bezier(1));
 	}else{
-		this->lineTo(B(min(tExt.x, tExt.y)));
-		this->lineTo(B(max(tExt.x, tExt.y)));
-		this->lineTo(B(1));
+		this->lineTo(bezier(min(tExt.x, tExt.y)));
+		this->lineTo(bezier(max(tExt.x, tExt.y)));
+		this->lineTo(bezier(1));
 	}
 }
 
