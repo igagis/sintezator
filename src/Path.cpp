@@ -45,7 +45,25 @@ std::array<morda::real, 2> solveSquareEquation(morda::real a, morda::real b, mor
 	
 	using utki::pow2;
 	using std::sqrt;
-	using std::numeric_limits;
+	using std::abs;
+	
+	auto const eps_c = 0.001f;
+	
+	if(abs(a) < eps_c){
+		//linear equation
+		
+		if(abs(b) < eps_c){
+			//constant, no roots or any number is root if 'c' is 0;
+			x[0] = std::nanf("");
+			x[1] = x[0];
+			return x;
+		}
+		
+		x[0] = -c / b;
+		x[1] = x[0];
+		
+		return x;
+	}
 	
 	auto D = pow2(b) - 4 * a * c;
 	
@@ -127,6 +145,8 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(1)));
 	
 	morda::real minVel = max(absDiffBezierMin.x, absDiffBezierMin.y);
+	
+	TRACE(<< "minVel = " << minVel)
 	
 	if(minVel > 0){
 		const morda::real minStep_c = 1.4f;
