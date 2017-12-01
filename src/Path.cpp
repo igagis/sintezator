@@ -40,14 +40,14 @@ template <class T> Vector2<T> abs(const Vector2<T>& v){
 }
 
 namespace{
+auto const eps_c = 0.001f;
+
 std::array<morda::real, 2> solveSquareEquation(morda::real a, morda::real b, morda::real c){
 	std::array<morda::real, 2> x;
 	
 	using utki::pow2;
 	using std::sqrt;
 	using std::abs;
-	
-	auto const eps_c = 0.001f;
 	
 	if(abs(a) < eps_c){
 		//linear equation
@@ -78,6 +78,17 @@ std::array<morda::real, 2> solveSquareEquation(morda::real a, morda::real b, mor
 	
 	return x;
 }
+
+morda::real squareEquationExtermum(morda::real a, morda::real b){
+	using std::abs;
+	
+	if(abs(a) < eps_c){
+		return std::nanf("");
+	}
+	
+	return -b / (2 * a);
+}
+
 }
 
 void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
@@ -132,7 +143,22 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	}
 	t1 = max(morda::Vec2r(0), min(t1, morda::Vec2r(1)));
 	
-	auto tExt = -b.compDiv(2 * a); //extremum position
+//	TRACE(<< "t0 = " << t0 << ", t1 = " << t1 << std::endl)
+	
+	morda::Vec2r tExt(
+		squareEquationExtermum(a.x, b.x),
+		squareEquationExtermum(a.y, b.y)
+	);
+
+	using std::isnan;
+	if(isnan(tExt.x)){
+		tExt.x = 0;
+	}
+	if(isnan(tExt.y)){
+		tExt.y = 0;
+	}
+
+//	auto tExt = -b.compDiv(2 * a); //extremum position
 	tExt = max(morda::Vec2r(0), min(tExt, morda::Vec2r(1)));
 	
 	using std::abs;
