@@ -64,7 +64,7 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	using std::min;
 	using std::max;
 	
-	//dBdt roots
+	//dBezier roots
 	auto t1 = (-b + sqrt(D)).compDiv(2 * a);
 	auto t2 = (-b - sqrt(D)).compDiv(2 * a);
 	
