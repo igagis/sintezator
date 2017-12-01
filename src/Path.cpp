@@ -52,10 +52,10 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	auto b = 6 * p0 - 12 * p1 + 6 * p2;
 	auto c = -3 * p0 + 3 * p1;
 	
-	auto dBezier = [a, b ,c](morda::Vec2r t){
-		auto ret = a.compMul(t).compMul(t) + b.compMul(t) + c;
-		using std::abs;
-		return abs(ret);
+	TRACE(<< "a = " << a << ", b = " << b << ", c = " << c << std::endl)
+	
+	auto diffBezier = [a, b ,c](morda::Vec2r t){
+		return a.compMul(t).compMul(t) + b.compMul(t) + c;
 	};
 	
 	auto D = b.compMul(b) - 4 * a.compMul(c);
@@ -67,6 +67,8 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	//dBezier roots
 	auto t1 = (-b + sqrt(D)).compDiv(2 * a);
 	auto t2 = (-b - sqrt(D)).compDiv(2 * a);
+	
+	TRACE(<< "t1 = " << t1 << ", t2 = " << t2 << std::endl)
 	
 	for(unsigned i = 0; i != t1.size(); ++i){
 		using std::isnan;
@@ -87,14 +89,16 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	auto tExt = -b.compDiv(2 * a); //extremum position
 	tExt = max(morda::Vec2r(0), min(tExt, morda::Vec2r(1)));
 	
-	auto dBezierExt = abs(dBezier(tExt)); //extremum value
+	using std::abs;
 	
-	dBezierExt = min(dBezierExt, dBezier(t1));
-	dBezierExt = min(dBezierExt, dBezier(t2));
-	dBezierExt = min(dBezierExt, dBezier(0));
-	dBezierExt = min(dBezierExt, dBezier(1));
+	auto absDiffBezierMin = abs(diffBezier(tExt)); //extremum value
 	
-	morda::real minVel = max(dBezierExt.x, dBezierExt.y);
+	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(t1)));
+	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(t2)));
+	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(0)));
+	absDiffBezierMin = min(absDiffBezierMin, abs(diffBezier(1)));
+	
+	morda::real minVel = max(absDiffBezierMin.x, absDiffBezierMin.y);
 	
 	if(minVel > 0){
 		const morda::real minStep_c = 1.4f;

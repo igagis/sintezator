@@ -15,6 +15,9 @@ this_cxxflags += -fstrict-aliasing #strict aliasing (in order to comply with the
 this_cxxflags += -g #include debugging symbols
 this_cxxflags += -std=c++11
 
+ifeq ($(debug),true)
+    this_cxxflags += -DDEBUG
+endif
 
 this_ldlibs += -lmordavokne-opengl2 -lmorda-opengl2-ren -lGLEW -lGL -lstdc++ -lmorda -lstob -rdynamic -lm
 
