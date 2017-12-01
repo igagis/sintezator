@@ -85,6 +85,7 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	t2 = max(morda::Vec2r(0), min(t2, morda::Vec2r(1)));
 	
 	auto tExt = -b.compDiv(2 * a);
+	tExt = max(morda::Vec2r(0), min(tExt, morda::Vec2r(1)));
 	
 	auto dBdtMin = abs(dBdt(tExt)); //dBdt extremum
 	
@@ -93,12 +94,21 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	dBdtMin = min(dBdtMin, dBdt(0));
 	dBdtMin = min(dBdtMin, dBdt(1));
 	
-	auto dt = 1.4 / max(dBdtMin.x, dBdtMin.y);
+	morda::real minVel = max(dBdtMin.x, dBdtMin.y);
 	
-	for(morda::real t = 0; t < 1; t += dt){
-		this->lineTo(B(t));
+	if(minVel > 0){
+		const morda::real minStep_c = 1.4f;
+		auto dt = minStep_c / minVel;
+		
+		for(morda::real t = 0; t < 1; t += dt){
+			this->lineTo(B(t));
+		}
+		this->lineTo(B(1));
+	}else{
+		this->lineTo(B(min(tExt.x, tExt.y)));
+		this->lineTo(B(max(tExt.x, tExt.y)));
+		this->lineTo(B(1));
 	}
-	this->lineTo(B(1));
 }
 
 
