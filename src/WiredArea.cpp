@@ -58,7 +58,7 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 //	p.lineTo(morda::Vec2r(100, 50));
 	p.cubicBy(morda::Vec2r(0, -30), morda::Vec2r(50, 30), morda::Vec2r(50, 0));
 	
-	auto v = p.stroke();
+	auto v = p.stroke(3);
 	
 	glEnable(GL_CULL_FACE);
 	{
