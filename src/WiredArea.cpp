@@ -1,5 +1,6 @@
 #include "WiredArea.hpp"
 #include "Path.hpp"
+#include "PathVba.hpp"
 
 #include <morda/util/util.hpp>
 #include <morda/Morda.hpp>
@@ -58,31 +59,8 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 //	p.lineTo(morda::Vec2r(100, 50));
 	p.cubicBy(morda::Vec2r(0, -30), morda::Vec2r(50, 30), morda::Vec2r(50, 0));
 	
-	auto v = p.stroke(3);
-	
-	glEnable(GL_CULL_FACE);
-	{
-		auto vba = morda::inst().renderer().factory->createVertexArray(
-				{{
-					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos)),
-				}},
-				morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.inIndices)),
-				morda::VertexArray::Mode_e::TRIANGLE_STRIP
-			);
+	PathVba v(p.stroke(0.5, 1, 0.5));
 
-		morda::inst().renderer().shader->colorPos->render(matrix, *vba, 0xff00ff00);
-	}
-	
-	{
-		auto vba = morda::inst().renderer().factory->createVertexArray(
-				{{
-					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.pos)),
-					morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(v.alpha)),
-				}},
-				morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(v.outIndices)),
-				morda::VertexArray::Mode_e::TRIANGLE_STRIP
-			);
-
-		this->shaderColorPosLum.render(matrix, *vba, 0xff00ff00);
-	}
+	glEnable(GL_CULL_FACE);	
+	v.render(matrix, 0xff00ff00);
 }

@@ -13,8 +13,6 @@ class WiredArea : public morda::Container{
 	};
 
 	std::vector<Wire> wires;
-
-	OpenGL2ShaderColorPosLum shaderColorPosLum;
 	
 public:
 	WiredArea(const WiredArea&) = delete;
