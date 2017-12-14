@@ -17,27 +17,7 @@ void Path::cubicBy(morda::Vec2r relP1, morda::Vec2r relP2, morda::Vec2r relP3) {
 	this->cubicTo(d + relP1, d + relP2, d + relP3);
 }
 
-namespace kolme{
-template <class T> Vector2<T> sqrt(const Vector2<T>& v){
-	using std::sqrt;
-	return Vector2<T>(sqrt(v.x), sqrt(v.y));
-}
 
-template <class T> Vector2<T> min(const Vector2<T>& v1, const Vector2<T>& v2){
-	using std::min;
-	return Vector2<T>(min(v1.x, v2.x), min(v1.y, v2.y));
-}
-
-template <class T> Vector2<T> max(const Vector2<T>& v1, const Vector2<T>& v2){
-	using std::max;
-	return Vector2<T>(max(v1.x, v2.x), max(v1.y, v2.y));
-}
-
-template <class T> Vector2<T> abs(const Vector2<T>& v){
-	using std::abs;
-	return Vector2<T>(abs(v.x), abs(v.y));
-}
-}
 
 
 void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
@@ -117,27 +97,6 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 		auto antialiasMiter = miterCoeff * (halfWidth + antialiasWidth);
 		
 		if(!prev){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotation(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
-		}else if(!next){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotation(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
-		}else{
-			ret.pos.push_back((*cur) + normal * antialiasMiter);
-		}
-		
-		ret.alpha.push_back(0);
-		++inIndex;
-		
-		ret.pos.push_back((*cur) + normal * miter);
-		ret.alpha.push_back(antialiasAlpha);
-		ret.inIndices.push_back(inIndex);
-		++inIndex;
-		
-		ret.pos.push_back((*cur) - normal * miter);
-		ret.alpha.push_back(antialiasAlpha);
-		ret.inIndices.push_back(inIndex);
-		++inIndex;
-		
-		if(!prev){
 			ASSERT(next)
 			ret.pos.push_back((*cur) - normal * miter - normal.rotation(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
 		}else if(!next){
@@ -145,6 +104,26 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 			ret.pos.push_back((*cur) - normal * miter - normal.rotation(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) - normal * antialiasMiter);
+		}
+		ret.alpha.push_back(0);
+		++inIndex;
+		
+		ret.pos.push_back((*cur) - normal * miter);
+		ret.alpha.push_back(antialiasAlpha);
+		ret.inIndices.push_back(inIndex);
+		++inIndex;
+		
+		ret.pos.push_back((*cur) + normal * miter);
+		ret.alpha.push_back(antialiasAlpha);
+		ret.inIndices.push_back(inIndex);
+		++inIndex;
+		
+		if(!prev){
+			ret.pos.push_back((*cur) + normal * miter + normal.rotation(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+		}else if(!next){
+			ret.pos.push_back((*cur) + normal * miter + normal.rotation(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+		}else{
+			ret.pos.push_back((*cur) + normal * antialiasMiter);
 		}
 		ret.alpha.push_back(0);
 		++inIndex;
