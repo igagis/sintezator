@@ -16,6 +16,8 @@ WiredArea::WiredArea(const stob::Node* chain) :
 WiredArea::WireSocket::WireSocket(const stob::Node* chain) :
 		Widget(chain)
 {
+	this->outlet_v = Outlet_e::BOTTOM;
+	
 	if (auto p = morda::getProperty(chain, "outlet")) {
 		if (std::string("left") == p->value()) {
 			this->outlet_v = Outlet_e::LEFT;
@@ -25,8 +27,6 @@ WiredArea::WireSocket::WireSocket(const stob::Node* chain) :
 			this->outlet_v = Outlet_e::TOP;
 		}else if (std::string("bottom") == p->value()) {
 			this->outlet_v = Outlet_e::BOTTOM;
-		}else{
-			this->outlet_v = Outlet_e::CENTER;
 		}
 	}
 }
@@ -71,8 +71,8 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 			continue;
 		}
 		
-		auto p0 = s->calcPosInParent(0, this);
-		auto p1 = s->slave->calcPosInParent(0, this);
+		auto p0 = s->calcPosInParent(s->outletPos()[0], this);
+		auto p1 = s->slave->calcPosInParent(s->slave->outletPos()[0], this);
 		
 		Path p;
 		p.lineTo(p1 - p0);
@@ -105,4 +105,31 @@ void WiredArea::layOut() {
 	
 	this->sockets = this->findChildren<WireSocket>();
 	TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)
+}
+
+std::array<morda::Vec2r, 2> WiredArea::WireSocket::outletPos() const noexcept{
+	switch(this->outlet_v){
+		default:
+			ASSERT(false)
+		case Outlet_e::BOTTOM:
+			return {{
+					this->rect().p + morda::Vec2r(this->rect().d.x / 2, this->rect().d.y),
+					morda::Vec2r(0, 1)
+				}};
+		case Outlet_e::LEFT:
+			return {{
+					this->rect().p + morda::Vec2r(0, this->rect().d.y / 2),
+					morda::Vec2r(-1, 0)
+				}};
+		case Outlet_e::RIGHT:
+			return {{
+					this->rect().p + morda::Vec2r(this->rect().d.x, this->rect().d.y / 2),
+					morda::Vec2r(1, 0)
+				}};
+		case Outlet_e::TOP:
+			return {{
+					this->rect().p + morda::Vec2r(this->rect().d.x / 2, 0),
+					morda::Vec2r(1, 0)
+				}};
+	}
 }

@@ -1,13 +1,14 @@
 WiredArea{
 	
 	defs{
-		Socket{ text
+		Socket{ text outlet
 			Pile{
 				Text{
 					text{@{text}}
 				}
 				WireSocket{
 					name{ws}
+					outlet{@{outlet}}
 					layout{dx{fill} dy{fill}}
 				}
 			}
@@ -24,6 +25,7 @@ WiredArea{
 			
 			Socket{
 				name{in11}
+				outlet{right}
 				text{in1}
 			}
 			Socket{
