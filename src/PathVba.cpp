@@ -27,6 +27,6 @@ PathVba::PathVba(const Path::Vertices& path){
 }
 
 void PathVba::render(const morda::Matr4r& matrix, std::uint32_t color){
-	morda::inst().renderer().shader->colorPos->render(matrix, *this->core, 0xff00ff00);
-	static_cast<::App&>(mordavokne::inst()).shaderColorPosLum.render(matrix, *this->border, 0xff00ff00);
+	morda::inst().renderer().shader->colorPos->render(matrix, *this->core, color);
+	static_cast<::App&>(mordavokne::inst()).shaderColorPosLum.render(matrix, *this->border, color);
 }

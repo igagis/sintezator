@@ -7,6 +7,7 @@ WiredArea{
 					text{@{text}}
 				}
 				WireSocket{
+					name{ws}
 					layout{dx{fill} dy{fill}}
 				}
 			}
@@ -21,8 +22,8 @@ WiredArea{
 		Column{
 			layout{dx{fill} dy{fill}}
 			
-			
 			Socket{
+				name{in11}
 				text{in1}
 			}
 			Socket{
@@ -46,6 +47,7 @@ WiredArea{
 			layout{dx{fill} dy{fill}}
 			
 			Socket{
+				name{in12}
 				text{in1}
 			}
 			Socket{

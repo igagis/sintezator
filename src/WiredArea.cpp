@@ -9,7 +9,7 @@ WiredArea::WiredArea(const stob::Node* chain) :
 		Widget(chain),
 		Container(chain)
 {
-	
+	this->onChildrenListChanged();
 }
 
 
@@ -35,21 +35,56 @@ void WiredArea::WireSocket::connect(const std::shared_ptr<WiredArea::WireSocket>
 	this->setRelayoutNeeded();
 
 	//disconnect existing connection
-	if (auto c = this->connection.lock()) {
-		c->connection.reset();
-	}
-	this->connection.reset();
-
-	if (!o) {
+	this->disconnect();
+	
+	if(!o){
 		return;
 	}
-
-	this->connection = o;
-	o->connection = this->sharedFromThis(this);
+	
+	o->disconnect();
+	
+	this->slave = o;
+	this->slave->primary = this->sharedFromThis(this);
 }
+
+void WiredArea::WireSocket::disconnect() {
+	if(this->slave){
+		ASSERT(!this->primary.lock())
+		ASSERT(this->slave->primary.lock().get() == this)
+		ASSERT(!this->slave->slave)
+		this->slave->primary.reset();
+		this->slave.reset();
+	}else if(auto p = this->primary.lock()){
+		ASSERT(!p->primary.lock())
+		ASSERT(p->slave.get() == this)
+		p->slave.reset();
+		this->primary.reset();
+	}
+}
+
 
 void WiredArea::render(const morda::Matr4r& matrix) const {
 	this->Container::render(matrix);
+	
+	for(auto& s : this->sockets){
+		if(!s->slave){
+			continue;
+		}
+		
+		auto p0 = s->calcPosInParent(0, this);
+		auto p1 = s->slave->calcPosInParent(0, this);
+		
+		Path p;
+		p.lineTo(p1 - p0);
+		
+		PathVba vba(p.stroke(0.25, 0.55, 1));
+		
+		vba.render(morda::Matr4r(matrix).translate(p0), 0xff0000ff);
+	}
+	
+	
+	
+	
 	
 	Path p;
 	
@@ -63,4 +98,11 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 
 	glEnable(GL_CULL_FACE);	
 	v.render(matrix, 0xff00ff00);
+}
+
+void WiredArea::layOut() {
+	this->Container::layOut();
+	
+	this->sockets = this->findChildren<WireSocket>();
+	TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)
 }

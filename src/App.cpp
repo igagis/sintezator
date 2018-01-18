@@ -16,9 +16,17 @@ App::App() :
 
 	auto c = morda::Morda::inst().inflater.inflate(
 			*this->getResFile("res/main.gui")
-			);
+		);
+	
+	{
+		auto in11 = c->findByName("in11")->findChildByNameAs<WiredArea::WireSocket>("ws");
+		ASSERT(in11)
+		auto in12 = c->findByName("in12")->findChildByNameAs<WiredArea::WireSocket>("ws");
+		ASSERT(in12)
+		in11->connect(in12);
+	}
 
 	morda::Morda::inst().setRootWidget(
 			std::move(c)
-			);
+		);
 }
