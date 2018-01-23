@@ -71,13 +71,15 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 			continue;
 		}
 		
-		auto p0 = s->calcPosInParent(s->outletPos()[0], this);
-		auto p1 = s->slave->calcPosInParent(s->slave->outletPos()[0], this);
+		auto primOutletPos = s->outletPos();
+		auto slaveOutletPos = s->slave->outletPos();
+		auto p0 = s->calcPosInParent(primOutletPos[0], this);
+		auto p = s->slave->calcPosInParent(slaveOutletPos[0], this) - p0;
 		
-		Path p;
-		p.lineTo(p1 - p0);
+		Path path;
+		path.cubicTo(primOutletPos[1] * 100, p + slaveOutletPos[1] * 100, p);
 		
-		PathVba vba(p.stroke(0.25, 0.55, 1));
+		PathVba vba(path.stroke(0.25, 0.55, 1));
 		
 		vba.render(morda::Matr4r(matrix).translate(p0), 0xff0000ff);
 	}
