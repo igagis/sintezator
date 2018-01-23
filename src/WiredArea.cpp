@@ -110,28 +110,22 @@ void WiredArea::layOut() {
 }
 
 std::array<morda::Vec2r, 2> WiredArea::WireSocket::outletPos() const noexcept{
+	morda::Vec2r dir;
 	switch(this->outlet_v){
 		default:
 			ASSERT(false)
 		case Outlet_e::BOTTOM:
-			return {{
-					this->rect().p + morda::Vec2r(this->rect().d.x / 2, this->rect().d.y),
-					morda::Vec2r(0, 1)
-				}};
+			dir = morda::Vec2r(0, 1);
+			break;
 		case Outlet_e::LEFT:
-			return {{
-					this->rect().p + morda::Vec2r(0, this->rect().d.y / 2),
-					morda::Vec2r(-1, 0)
-				}};
+			dir = morda::Vec2r(-1, 0);
+			break;
 		case Outlet_e::RIGHT:
-			return {{
-					this->rect().p + morda::Vec2r(this->rect().d.x, this->rect().d.y / 2),
-					morda::Vec2r(1, 0)
-				}};
+			dir = morda::Vec2r(1, 0);
+			break;
 		case Outlet_e::TOP:
-			return {{
-					this->rect().p + morda::Vec2r(this->rect().d.x / 2, 0),
-					morda::Vec2r(1, 0)
-				}};
+			dir = morda::Vec2r(1, 0);
+			break;
 	}
+	return {{this->rect().center(), dir}};
 }
