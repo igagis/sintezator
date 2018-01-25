@@ -98,7 +98,7 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 	
 	PathVba v(p.stroke(0.5, 1, 0.5));
 
-	glEnable(GL_CULL_FACE);	
+//	glEnable(GL_CULL_FACE);
 	v.render(matrix, 0xff00ff00);
 }
 

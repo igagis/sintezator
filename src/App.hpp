@@ -5,9 +5,6 @@
 #include "WiredArea.hpp"
 
 class App : public mordavokne::App{
-public:
-	
-	OpenGL2ShaderColorPosLum shaderColorPosLum;
-	
+public:	
 	App();
 };

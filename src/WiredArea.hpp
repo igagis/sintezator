@@ -2,7 +2,6 @@
 
 #include <morda/widgets/core/container/Container.hpp>
 
-#include "OpenGL2ShaderColorPosLum.hpp"
 
 class WiredArea : public morda::Container{
 	

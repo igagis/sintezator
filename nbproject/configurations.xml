@@ -6,7 +6,6 @@
     <df root="src" name="1">
       <in>App.cpp</in>
       <in>App.hpp</in>
-      <in>OpenGL2ShaderColorPosLum.cpp</in>
       <in>Path.cpp</in>
       <in>PathVba.cpp</in>
       <in>PathVba.hpp</in>
@@ -62,10 +61,6 @@
       <item path="src/App.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/App.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/OpenGL2ShaderColorPosLum.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
       </item>
       <item path="src/Path.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">

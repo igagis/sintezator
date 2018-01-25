@@ -31,7 +31,7 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 	
 	auto lengthEst = (p1 - p0).magnitude() + (p2 - p1).magnitude() + (p3 - p2).magnitude();
 	
-	const morda::real minStep_c = 20.0f;
+	const morda::real minStep_c = 10.0f;
 	
 	auto numSteps = lengthEst / minStep_c;
 
