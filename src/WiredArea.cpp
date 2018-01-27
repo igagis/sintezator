@@ -9,7 +9,6 @@ WiredArea::WiredArea(const stob::Node* chain) :
 		Widget(chain),
 		Container(chain)
 {
-	this->onChildrenListChanged();
 }
 
 
