@@ -84,7 +84,17 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 		vba.render(morda::Matr4r(matrix).translate(p0), 0xff0000ff);
 	}
 	
-	
+	if(this->grabbedSocket){
+		auto outletPos = this->grabbedSocket->outletPos();
+		auto p0 = this->grabbedSocket->calcPosInParent(outletPos[0], this);
+		
+		Path path;
+		path.lineTo(mousePos - p0);
+		
+		PathVba vba(path.stroke(0.5, 0.55, 1));
+		
+		vba.render(morda::Matr4r(matrix).translate(p0), 0xff808080);
+	}
 	
 	
 	
@@ -101,6 +111,14 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 //	glEnable(GL_CULL_FACE);
 	v.render(matrix, 0xff00ff00);
 }
+
+bool WiredArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
+	if(this->grabbedSocket){
+		this->mousePos = pos;
+	}
+	return this->Container::onMouseMove(pos, pointerID);;
+}
+
 
 void WiredArea::layOut() {
 	this->Container::layOut();
@@ -128,4 +146,27 @@ std::array<morda::Vec2r, 2> WiredArea::WireSocket::outletPos() const noexcept{
 			break;
 	}
 	return {{this->rect().center(), dir}};
+}
+
+bool WiredArea::WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) {
+	if(button != morda::MouseButton_e::LEFT){
+		return false;
+	}
+	
+	if(auto wa = this->findAncestor<WiredArea>()){
+		if(isDown){
+			wa->grabbedSocket = this->sharedFromThis(this);
+		}else{
+			this->connect(wa->hoveredSocket);
+			wa->grabbedSocket.reset();
+		}
+		return true;
+	}
+	return false;
+}
+
+void WiredArea::WireSocket::onHoverChanged(unsigned pointerID) {
+	if(auto wa = this->findAncestor<WiredArea>()){
+		wa->hoveredSocket = this->sharedFromThis(this);
+	}
 }

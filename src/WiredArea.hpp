@@ -52,13 +52,24 @@ public:
 
 		void connect(const std::shared_ptr<WireSocket>& o = nullptr);
 		void disconnect();
+		
+		bool onMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) override;
+
+		void onHoverChanged(unsigned pointerID) override;
 	};
 	
 	void render(const morda::Matr4r& matrix) const override;
 
 	void layOut() override;
+	
+	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID) override;
 
 private:
+	morda::Vec2r mousePos;
+	
+	std::shared_ptr<WireSocket> grabbedSocket;
+	std::shared_ptr<WireSocket> hoveredSocket;
+	
 	std::list<std::shared_ptr<WireSocket>> sockets;
 
 };
