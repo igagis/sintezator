@@ -29,9 +29,11 @@ WiredArea{
 				text{in1}
 			}
 			Socket{
+				outlet{left}
 				text{in2}
 			}
 			Socket{
+				outlet{top}
 				text{out1}
 			}
 			Socket{

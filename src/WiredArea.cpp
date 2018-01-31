@@ -141,7 +141,7 @@ std::array<morda::Vec2r, 2> WiredArea::WireSocket::outletPos() const noexcept{
 			dir = morda::Vec2r(1, 0);
 			break;
 		case Outlet_e::TOP:
-			dir = morda::Vec2r(1, 0);
+			dir = morda::Vec2r(0, -1);
 			break;
 	}
 	return {{this->rect().center(), dir}};
@@ -167,6 +167,10 @@ bool WiredArea::WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, 
 
 void WiredArea::WireSocket::onHoverChanged(unsigned pointerID) {
 	if(auto wa = this->findAncestor<WiredArea>()){
-		wa->hoveredSocket = this->sharedFromThis(this);
+		if(this->isHovered()){
+			wa->hoveredSocket = this->sharedFromThis(this);
+		}else{
+			wa->hoveredSocket.reset();
+		}
 	}
 }
