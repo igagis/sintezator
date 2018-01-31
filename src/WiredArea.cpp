@@ -155,6 +155,7 @@ bool WiredArea::WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, 
 	if(auto wa = this->findAncestor<WiredArea>()){
 		if(isDown){
 			wa->grabbedSocket = this->sharedFromThis(this);
+			wa->mousePos = this->calcPosInParent(pos, wa);
 		}else{
 			this->connect(wa->hoveredSocket);
 			wa->grabbedSocket.reset();
