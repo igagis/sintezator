@@ -4,7 +4,9 @@
 
 
 class WiredArea : public morda::Container{
-	
+	morda::real wireHalfWidth;
+	std::uint32_t wireColor;
+	std::uint32_t grabbedColor;
 public:
 	WiredArea(const WiredArea&) = delete;
 	WiredArea& operator=(const WiredArea&) = delete;
@@ -13,6 +15,8 @@ public:
 	
 	class WireSocket : virtual public morda::Widget{
 		friend class WiredArea;
+		
+		unsigned groupId;
 	public:
 		enum class Outlet_e {
 			LEFT,

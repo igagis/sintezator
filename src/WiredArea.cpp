@@ -5,10 +5,32 @@
 #include <morda/util/util.hpp>
 #include <morda/Morda.hpp>
 
+namespace{
+const morda::real antialiasWidth = morda::real(0.55f);
+const morda::real splineControlLength = morda::real(100);
+}
+
 WiredArea::WiredArea(const stob::Node* chain) :
 		Widget(chain),
 		Container(chain)
 {
+	if(auto p = morda::getProperty(chain, "wireWidth")){
+		this->wireHalfWidth = morda::real(p->asFloat()) / 2;
+	}else{
+		this->wireHalfWidth = 0.25;
+	}
+	
+	if(auto p = morda::getProperty(chain, "wireColor")){
+		this->wireColor = p->asUint32();
+	}else{
+		this->wireColor = 0xff0000ff;
+	}
+	
+	if(auto p = morda::getProperty(chain, "grabbedColor")){
+		this->grabbedColor = p->asUint32();
+	}else{
+		this->grabbedColor = 0xff808080;
+	}
 }
 
 
@@ -36,7 +58,7 @@ void WiredArea::WireSocket::connect(const std::shared_ptr<WiredArea::WireSocket>
 	//disconnect existing connection
 	this->disconnect();
 	
-	if(!o){
+	if(!o || o.get() == this){
 		return;
 	}
 	
@@ -76,11 +98,11 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 		auto p = s->slave->calcPosInParent(slaveOutletPos[0], this) - p0;
 		
 		Path path;
-		path.cubicTo(primOutletPos[1] * 100, p + slaveOutletPos[1] * 100, p);
+		path.cubicTo(primOutletPos[1] * splineControlLength, p + slaveOutletPos[1] * splineControlLength, p);
 		
-		PathVba vba(path.stroke(0.25, 0.55, 1));
+		PathVba vba(path.stroke(this->wireHalfWidth, antialiasWidth, 1));
 		
-		vba.render(morda::Matr4r(matrix).translate(p0), 0xff0000ff);
+		vba.render(morda::Matr4r(matrix).translate(p0), this->wireColor);
 	}
 	
 	if(this->grabbedSocket){
@@ -90,9 +112,9 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 		Path path;
 		path.lineTo(mousePos - p0);
 		
-		PathVba vba(path.stroke(0.5, 0.55, 1));
+		PathVba vba(path.stroke(this->wireHalfWidth, antialiasWidth, 1));
 		
-		vba.render(morda::Matr4r(matrix).translate(p0), 0xff808080);
+		vba.render(morda::Matr4r(matrix).translate(p0), this->grabbedColor);
 	}
 	
 	
