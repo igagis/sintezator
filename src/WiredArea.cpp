@@ -6,8 +6,11 @@
 #include <morda/Morda.hpp>
 
 namespace{
-const morda::real antialiasWidth = morda::real(0.55f);
-const morda::real splineControlLength = morda::real(100);
+const morda::real antialiasWidth_c = morda::real(0.55f);
+const morda::real splineControlLength_c = morda::real(100);
+const morda::real deafultWireHalfWidth_c = morda::real(0.25f);
+const std::uint32_t defaultWireColor_c = 0xff0000ff;
+const std::uint32_t defaultGrabbedColor_c = 0xff808080;
 }
 
 WiredArea::WiredArea(const stob::Node* chain) :
@@ -17,19 +20,19 @@ WiredArea::WiredArea(const stob::Node* chain) :
 	if(auto p = morda::getProperty(chain, "wireWidth")){
 		this->wireHalfWidth = morda::real(p->asFloat()) / 2;
 	}else{
-		this->wireHalfWidth = 0.25;
+		this->wireHalfWidth = deafultWireHalfWidth_c;
 	}
 	
 	if(auto p = morda::getProperty(chain, "wireColor")){
 		this->wireColor = p->asUint32();
 	}else{
-		this->wireColor = 0xff0000ff;
+		this->wireColor = defaultWireColor_c;
 	}
 	
 	if(auto p = morda::getProperty(chain, "grabbedColor")){
 		this->grabbedColor = p->asUint32();
 	}else{
-		this->grabbedColor = 0xff808080;
+		this->grabbedColor = defaultGrabbedColor_c;
 	}
 }
 
@@ -98,9 +101,9 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 		auto p = s->slave->calcPosInParent(slaveOutletPos[0], this) - p0;
 		
 		Path path;
-		path.cubicTo(primOutletPos[1] * splineControlLength, p + slaveOutletPos[1] * splineControlLength, p);
+		path.cubicTo(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);
 		
-		PathVba vba(path.stroke(this->wireHalfWidth, antialiasWidth, 1));
+		PathVba vba(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
 		vba.render(morda::Matr4r(matrix).translate(p0), this->wireColor);
 	}
@@ -112,25 +115,10 @@ void WiredArea::render(const morda::Matr4r& matrix) const {
 		Path path;
 		path.lineTo(mousePos - p0);
 		
-		PathVba vba(path.stroke(this->wireHalfWidth, antialiasWidth, 1));
+		PathVba vba(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
 		vba.render(morda::Matr4r(matrix).translate(p0), this->grabbedColor);
 	}
-	
-	
-	
-	Path p;
-	
-	p.lineTo(100);
-//	p.lineTo(10, 20);
-//	p.lineTo(morda::Vec2r(50, 100));
-//	p.lineTo(morda::Vec2r(100, 50));
-	p.cubicBy(morda::Vec2r(50, -100), morda::Vec2r(200, 200), morda::Vec2r(200, 0));
-	
-	PathVba v(p.stroke(0.5, 1, 0.5));
-
-//	glEnable(GL_CULL_FACE);
-	v.render(matrix, 0xff00ff00);
 }
 
 bool WiredArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
