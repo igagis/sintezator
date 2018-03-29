@@ -132,7 +132,7 @@ bool WiredArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 void WiredArea::layOut() {
 	this->Container::layOut();
 	
-	this->sockets = this->findChildren<WireSocket>();
+	this->sockets = this->find<WireSocket>();
 	TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <morda/widgets/core/container/Container.hpp>
+#include <morda/widgets/Container.hpp>
 
 
 class WiredArea : public morda::Container{
