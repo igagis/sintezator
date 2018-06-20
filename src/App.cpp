@@ -1,4 +1,5 @@
 #include "App.hpp"
+#include "Block.hpp"
 
 
 
@@ -11,6 +12,7 @@ App::App() :
 
 	//		morda::inst().resMan.mountResPack(*this->getResFile("res/"));
 
+	morda::inst().inflater.registerType<Block>("Block");
 	morda::inst().inflater.registerType<WiredArea>("WiredArea");
 	morda::inst().inflater.registerType<WiredArea::WireSocket>("WireSocket");
 

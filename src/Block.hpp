@@ -1,0 +1,19 @@
+#pragma once
+
+#include <morda/widgets/group/Pile.hpp>
+
+class Block : 
+	private morda::Pile,
+	virtual public morda::Widget
+{
+public:
+	Block(const stob::Node* chain);
+	
+	Block(const Block&) = delete;
+	Block& operator=(const Block&) = delete;
+	
+	morda::Pile& content;
+	
+private:
+
+};
