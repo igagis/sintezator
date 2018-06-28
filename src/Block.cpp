@@ -6,11 +6,10 @@ namespace{
 const char* blockLayout_c = R"qwertyuiop(
 	MouseProxy{
 		name{mouseProxy}
+		layout{dx{fill} dy{fill}}
 	}
 	NinePatch{
 		name{ninePatch}
-
-		layout{dx{fill} dy{fill}}
 
 		image{morda_npt_window_bg}
 

@@ -15,7 +15,7 @@ const std::uint32_t defaultGrabbedColor_c = 0xff808080;
 
 WiredArea::WiredArea(const stob::Node* chain) :
 		Widget(chain),
-		Container(chain)
+		SizeContainer(chain)
 {
 	if(auto p = morda::getProperty(chain, "wireWidth")){
 		this->wireHalfWidth = morda::real(p->asFloat()) / 2;
@@ -130,7 +130,7 @@ bool WiredArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 
 
 void WiredArea::layOut() {
-	this->Container::layOut();
+	this->SizeContainer::layOut();
 	
 	this->sockets = this->find<WireSocket>();
 	TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)

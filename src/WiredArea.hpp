@@ -1,9 +1,9 @@
 #pragma once
 
-#include <morda/widgets/Container.hpp>
+#include <morda/widgets/group/SizeContainer.hpp>
 
 
-class WiredArea : public morda::Container{
+class WiredArea : public morda::SizeContainer{
 	morda::real wireHalfWidth;
 	std::uint32_t wireColor;
 	std::uint32_t grabbedColor;
