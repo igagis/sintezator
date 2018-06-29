@@ -15,5 +15,7 @@ public:
 	morda::Pile& content;
 	
 private:
-
+	bool captured = false;
+	morda::Vec2r capturePoint;
+	
 };

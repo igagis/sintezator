@@ -1,6 +1,7 @@
 #include "Block.hpp"
 
 #include <morda/widgets/label/NinePatch.hpp>
+#include <morda/widgets/proxy/MouseProxy.hpp>
 
 namespace{
 const char* blockLayout_c = R"qwertyuiop(
@@ -30,4 +31,28 @@ Block::Block(const stob::Node* chain) :
 	if(chain){
 		this->content.add(*chain);
 	}
+	
+	auto& mp = this->getByNameAs<morda::MouseProxy>("mouseProxy");
+	
+	mp.mouseButton = decltype(morda::MouseProxy::mouseButton)([this](Widget& widget, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId){
+		if(button != morda::MouseButton_e::LEFT){
+			return false;
+		}
+
+		if(isDown){
+			this->captured = true;
+			this->capturePoint = pos;
+			return true;
+		}
+		this->captured = false;
+		return false;
+	});
+	
+	mp.mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+		if(this->captured){
+			this->moveBy(pos - this->capturePoint);
+			return true;
+		}
+		return false;
+	};
 }

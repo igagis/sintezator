@@ -22,7 +22,7 @@ WiredArea{
 		Column{
 			Socket{
 				name{in11}
-				outlet{right}
+				outlet{top}
 				text{in1}
 			}
 			Socket{
@@ -30,10 +30,11 @@ WiredArea{
 				text{in2}
 			}
 			Socket{
-				outlet{top}
+				outlet{right}
 				text{out1}
 			}
 			Socket{
+				outlet{bottom}
 				text{out2}
 			}
 		}
@@ -46,8 +47,6 @@ WiredArea{
 		layout{dx{100}dy{200}}
 		
 		Column{
-			layout{dx{fill} dy{fill}}
-			
 			Socket{
 				name{in12}
 				text{in1}
