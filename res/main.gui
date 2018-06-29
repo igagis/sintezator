@@ -16,7 +16,6 @@ WiredArea{
 	}
 
 	Block{
-		title{Hello1}
 		x{10} y{10}
 
 		Column{
@@ -40,11 +39,8 @@ WiredArea{
 		}
 	}
 	
-	Window{
-		title{Hello2}
-		dx{100} dy{100}
+	Block{
 		x{200} y{200}
-		layout{dx{100}dy{200}}
 		
 		Column{
 			Socket{
