@@ -176,11 +176,14 @@ bool WiredArea::WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, 
 }
 
 void WiredArea::WireSocket::onHoverChanged(unsigned pointerID) {
+//	TRACE(<< "Hover changed: " << this->isHovered() << " " << this << std::endl)
 	if(auto wa = this->findAncestor<WiredArea>()){
 		if(this->isHovered()){
 			wa->hoveredSocket = this->sharedFromThis(this);
 		}else{
-			wa->hoveredSocket.reset();
+			if(wa->hoveredSocket.get() == this){
+				wa->hoveredSocket.reset();
+			}
 		}
 	}
 }
