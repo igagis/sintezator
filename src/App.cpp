@@ -13,17 +13,17 @@ App::App() :
 	//		morda::inst().resMan.mountResPack(*this->getResFile("res/"));
 
 	morda::inst().inflater.registerType<Block>("Block");
-	morda::inst().inflater.registerType<WiredArea>("WiredArea");
-	morda::inst().inflater.registerType<WiredArea::WireSocket>("WireSocket");
+	morda::inst().inflater.registerType<WireArea>("WiredArea");
+	morda::inst().inflater.registerType<WireSocket>("WireSocket");
 
 	auto c = morda::Morda::inst().inflater.inflate(
 			*this->getResFile("res/main.gui")
 		);
 	
 	{
-		auto in11 = c->findByName("in11")->findByNameAs<WiredArea::WireSocket>("ws");
+		auto in11 = c->findByName("in11")->findByNameAs<WireSocket>("ws");
 		ASSERT(in11)
-		auto in12 = c->findByName("in12")->findByNameAs<WiredArea::WireSocket>("ws");
+		auto in12 = c->findByName("in12")->findByNameAs<WireSocket>("ws");
 		ASSERT(in12)
 		in11->connect(in12);
 	}

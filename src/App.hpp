@@ -2,7 +2,7 @@
 
 #include <mordavokne/App.hpp>
 
-#include "WiredArea.hpp"
+#include "WireArea.hpp"
 
 class App : public mordavokne::App{
 public:	

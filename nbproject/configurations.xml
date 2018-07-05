@@ -11,7 +11,9 @@
       <in>Path.cpp</in>
       <in>PathVba.cpp</in>
       <in>PathVba.hpp</in>
-      <in>WiredArea.cpp</in>
+      <in>WireArea.cpp</in>
+      <in>WireSocket.cpp</in>
+      <in>WireSocket.hpp</in>
       <in>main.cpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -76,9 +78,13 @@
       </item>
       <item path="src/PathVba.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/WiredArea.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/WireArea.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
+      </item>
+      <item path="src/WireSocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/WireSocket.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">

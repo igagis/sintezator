@@ -45,15 +45,19 @@ WiredArea{
 		Column{
 			Socket{
 				name{in12}
+				outlet{top}
 				text{in1}
 			}
 			Socket{
+				outlet{left}
 				text{in2}
 			}
 			Socket{
+				outlet{right}
 				text{out1}
 			}
 			Socket{
+				outlet{bottom}
 				text{out2}
 			}
 		}
