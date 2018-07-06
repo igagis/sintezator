@@ -51,6 +51,4 @@ public:
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) override;
 
 	void onHoverChanged(unsigned pointerID) override;
-	
-	void* getUserData();
 };
