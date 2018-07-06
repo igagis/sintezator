@@ -37,7 +37,8 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 
 	auto dt = 1 / numSteps;
 
-	for(morda::real t = 0; t < 1; t += dt){
+	//NOTE: start from dt because 0th point is already there in the path
+	for(morda::real t = dt; t < 1; t += dt){
 		this->lineTo(bezier(t));
 	}
 	this->lineTo(bezier(1));
@@ -96,12 +97,15 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 		auto miter = miterCoeff * halfWidth;
 		auto antialiasMiter = miterCoeff * (halfWidth + antialiasWidth);
 		
+		using std::sqrt;
+		using utki::pi;
+		
 		if(!prev){
 			ASSERT(next)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotation(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rotation(-pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
 		}else if(!next){
 			ASSERT(prev)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotation(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rotation(pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) - normal * antialiasMiter);
 		}
