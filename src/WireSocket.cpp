@@ -56,23 +56,28 @@ void WireSocket::disconnect() {
 
 std::array<morda::Vec2r, 2> WireSocket::outletPos() const noexcept{
 	morda::Vec2r dir;
+	morda::Vec2r pos;
 	switch(this->outlet_v){
 		default:
 			ASSERT(false)
 		case Outlet_e::BOTTOM:
+			pos = this->rect().p + this->rect().d.compMul(morda::Vec2r(0.5, 1));
 			dir = morda::Vec2r(0, 1);
 			break;
 		case Outlet_e::LEFT:
+			pos = this->rect().p + this->rect().d.compMul(morda::Vec2r(0, 0.5));
 			dir = morda::Vec2r(-1, 0);
 			break;
 		case Outlet_e::RIGHT:
+			pos = this->rect().p + this->rect().d.compMul(morda::Vec2r(1, 0.5));
 			dir = morda::Vec2r(1, 0);
 			break;
 		case Outlet_e::TOP:
+			pos = this->rect().p + this->rect().d.compMul(morda::Vec2r(0.5, 0));
 			dir = morda::Vec2r(0, -1);
 			break;
 	}
-	return {{this->rect().center(), dir}};
+	return {{pos, dir}};
 }
 
 bool WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) {

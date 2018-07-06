@@ -19,6 +19,8 @@ private:
 	std::weak_ptr<WireSocket> primary;
 	std::shared_ptr<WireSocket> slave;
 
+	void* userData_v = nullptr;
+	
 public:
 	WireSocket(const WireSocket&) = delete;
 	WireSocket& operator=(const WireSocket&) = delete;
@@ -49,4 +51,6 @@ public:
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) override;
 
 	void onHoverChanged(unsigned pointerID) override;
+	
+	void* getUserData();
 };
