@@ -11,6 +11,8 @@
       <in>Path.cpp</in>
       <in>PathVba.cpp</in>
       <in>PathVba.hpp</in>
+      <in>SineSource.cpp</in>
+      <in>SineSource.hpp</in>
       <in>SpeakersBlock.cpp</in>
       <in>SpeakersBlock.hpp</in>
       <in>WireArea.cpp</in>
@@ -79,6 +81,10 @@
       <item path="src/PathVba.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/PathVba.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SineSource.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SineSource.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SpeakersBlock.cpp" ex="false" tool="1" flavor2="0">
       </item>
