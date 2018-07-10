@@ -19,6 +19,6 @@ ifeq ($(debug),true)
     this_cxxflags += -DDEBUG
 endif
 
-this_ldlibs += -lmordavokne-opengl2 -lmorda-opengl2-ren -lGLEW -lGL -lstdc++ -lmorda -lstob -rdynamic -lm
+this_ldlibs += -laumiks -lnitki  -lpogodi -laudout -lpulse -lpulse-simple -lmordavokne-opengl2 -lmorda-opengl2-ren -lGLEW -lGL -lstdc++ -lmorda -lstob -rdynamic -lm
 
 $(eval $(prorab-build-app))

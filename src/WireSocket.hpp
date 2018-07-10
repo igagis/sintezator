@@ -52,6 +52,22 @@ public:
 
 	void onHoverChanged(unsigned pointerID) override;
 	
+	virtual bool canConnectTo(const WireSocket& ws){
+		return true;
+	}
+	
+	virtual void onConnected(WireSocket& to);
+	
+	/**
+	 * @brief Invoked when one socket is connected to another.
+	 */
+	std::function<void(WireSocket&, WireSocket&)> connected;
+	
+	
+	virtual void onDisconnected(WireSocket& from);
+	
+	std::function<void(WireSocket&, WireSocket&)> disconnected;
+	
 	/**
 	 * @brief Data for user use.
 	 */

@@ -1,5 +1,6 @@
 #include "App.hpp"
 #include "Block.hpp"
+#include "SpeakersBlock.hpp"
 
 
 
@@ -21,6 +22,9 @@ App::App() :
 		);
 	
 	{
+		auto& wa = c->getByNameAs<WireArea>("wireArea");
+		wa.add(std::make_shared<SpeakersBlock>());
+		
 		auto in11 = c->findByName("in11")->findByNameAs<WireSocket>("ws");
 		ASSERT(in11)
 		auto in12 = c->findByName("in12")->findByNameAs<WireSocket>("ws");

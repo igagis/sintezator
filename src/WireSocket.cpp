@@ -23,8 +23,6 @@ WireSocket::WireSocket(const stob::Node* chain) :
 }
 
 void WireSocket::connect(const std::shared_ptr<WireSocket>& o) {
-	this->setRelayoutNeeded();
-
 	//disconnect existing connection
 	this->disconnect();
 	
@@ -36,6 +34,7 @@ void WireSocket::connect(const std::shared_ptr<WireSocket>& o) {
 	
 	this->slave = o;
 	this->slave->primary = this->sharedFromThis(this);
+	this->onConnected(*this->slave);
 }
 
 void WireSocket::disconnect() {
@@ -44,14 +43,16 @@ void WireSocket::disconnect() {
 		ASSERT(this->slave->primary.lock().get() == this)
 		ASSERT(!this->slave->slave)
 		this->slave->primary.reset();
+		auto oldSlave = std::move(this->slave);
 		this->slave.reset();
+		this->onDisconnected(*oldSlave);
 	}else if(auto p = this->primary.lock()){
 		ASSERT(!p->primary.lock())
 		ASSERT(p->slave.get() == this)
-		p->slave.reset();
-		this->primary.reset();
+		p->disconnect();
 	}
 }
+
 
 
 std::array<morda::Vec2r, 2> WireSocket::outletPos() const noexcept{
@@ -110,3 +111,16 @@ void WireSocket::onHoverChanged(unsigned pointerID) {
 		}
 	}
 }
+
+void WireSocket::onConnected(WireSocket& to) {
+	if (this->connected) {
+		this->connected(*this, to);
+	}
+}
+
+void WireSocket::onDisconnected(WireSocket& from) {
+	if(this->disconnected){
+		this->disconnected(*this, from);
+	}
+}
+

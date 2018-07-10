@@ -1,19 +1,20 @@
-WiredArea{
-	
-	defs{
-		Socket{ text outlet
-			Pile{
-				Text{
-					text{@{text}}
-				}
-				WireSocket{
-					name{ws}
-					outlet{@{outlet}}
-					layout{dx{fill} dy{fill}}
-				}
+defs{
+	Socket{ text outlet
+		Pile{
+			Text{
+				text{@{text}}
+			}
+			WireSocket{
+				name{ws}
+				outlet{@{outlet}}
+				layout{dx{fill} dy{fill}}
 			}
 		}
 	}
+}
+
+WiredArea{
+	name{wireArea}
 
 	Block{
 		x{10} y{10}
