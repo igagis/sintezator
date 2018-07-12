@@ -1,7 +1,8 @@
 #include "App.hpp"
 #include "Block.hpp"
 #include "SpeakersBlock.hpp"
-
+#include "InputSocket.hpp"
+#include "OutputSocket.hpp"
 
 
 App::App() :
@@ -15,7 +16,8 @@ App::App() :
 
 	morda::inst().inflater.registerType<Block>("Block");
 	morda::inst().inflater.registerType<WireArea>("WiredArea");
-	morda::inst().inflater.registerType<WireSocket>("WireSocket");
+	morda::inst().inflater.registerType<InputSocket>("InputSocket");
+	morda::inst().inflater.registerType<OutputSocket>("OutputSocket");
 
 	auto c = morda::Morda::inst().inflater.inflate(
 			*this->getResFile("res/main.gui")

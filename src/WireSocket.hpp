@@ -19,13 +19,14 @@ private:
 	std::weak_ptr<WireSocket> primary;
 	std::shared_ptr<WireSocket> slave;
 
-	void* userData_v = nullptr;
-	
 public:
 	WireSocket(const WireSocket&) = delete;
 	WireSocket& operator=(const WireSocket&) = delete;
 
+protected:
 	WireSocket(const stob::Node* chain);
+	
+public:
 
 	/**
 	 * @brief Alignment of wire out.
@@ -52,24 +53,17 @@ public:
 
 	void onHoverChanged(unsigned pointerID) override;
 	
-	virtual bool canConnectTo(const WireSocket& ws){
-		return true;
-	}
-	
-	virtual void onConnected(WireSocket& to);
+	/**
+	 * @brief Connection event callback.
+	 * The notification method is called only on one of the wire sockets.
+	 * @param to - the wire socket it is connected to.
+	 */
+	virtual void onConnected(WireSocket& to){}
 	
 	/**
-	 * @brief Invoked when one socket is connected to another.
+	 * @brief Disconnection event notification.
+	 * The notification method is called only on one of the wire sockets.
+	 * @param from - the wire socket it was disconnected from.
 	 */
-	std::function<void(WireSocket&, WireSocket&)> connected;
-	
-	
-	virtual void onDisconnected(WireSocket& from);
-	
-	std::function<void(WireSocket&, WireSocket&)> disconnected;
-	
-	/**
-	 * @brief Data for user use.
-	 */
-	void* userData = nullptr;
+	virtual void onDisconnected(WireSocket& from){}
 };

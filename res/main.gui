@@ -1,10 +1,25 @@
 defs{
-	Socket{ text outlet
+	InSocket{ text outlet
 		Pile{
 			Text{
 				text{@{text}}
+				color{0xff0000ff}
 			}
-			WireSocket{
+			InputSocket{
+				name{ws}
+				outlet{@{outlet}}
+				layout{dx{fill} dy{fill}}
+			}
+		}
+	}
+
+	OutSocket{ text outlet
+		Pile{
+			Text{
+				text{@{text}}
+				color{0xff00ff00}
+			}
+			OutputSocket{
 				name{ws}
 				outlet{@{outlet}}
 				layout{dx{fill} dy{fill}}
@@ -20,20 +35,20 @@ WiredArea{
 		x{10} y{10}
 
 		Column{
-			Socket{
+			InSocket{
 				name{in11}
 				outlet{top}
 				text{in1}
 			}
-			Socket{
+			InSocket{
 				outlet{left}
 				text{in2}
 			}
-			Socket{
+			OutSocket{
 				outlet{right}
 				text{out1}
 			}
-			Socket{
+			OutSocket{
 				outlet{bottom}
 				text{out2}
 			}
@@ -44,20 +59,20 @@ WiredArea{
 		x{200} y{200}
 		
 		Column{
-			Socket{
+			InSocket{
 				name{in12}
 				outlet{top}
 				text{in1}
 			}
-			Socket{
+			InSocket{
 				outlet{left}
 				text{in2}
 			}
-			Socket{
+			OutSocket{
 				outlet{right}
 				text{out1}
 			}
-			Socket{
+			OutSocket{
 				outlet{bottom}
 				text{out2}
 			}

@@ -111,16 +111,3 @@ void WireSocket::onHoverChanged(unsigned pointerID) {
 		}
 	}
 }
-
-void WireSocket::onConnected(WireSocket& to) {
-	if (this->connected) {
-		this->connected(*this, to);
-	}
-}
-
-void WireSocket::onDisconnected(WireSocket& from) {
-	if(this->disconnected){
-		this->disconnected(*this, from);
-	}
-}
-
