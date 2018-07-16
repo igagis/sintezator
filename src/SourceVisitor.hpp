@@ -8,11 +8,17 @@ class SourceVisitor : public SocketVisitor{
 public:
 	std::shared_ptr<aumiks::Source<std::int32_t>> source;
 	
-	SourceVisitor(aumiks::Source<std::int32_t>& source);
+	SourceVisitor(std::shared_ptr<aumiks::Source<std::int32_t>> source);
 	
 	SourceVisitor(const SourceVisitor&) = delete;
 	SourceVisitor& operator=(const SourceVisitor&) = delete;
 	
-private:
-
+	void connectAccept(SocketVisitor& v) override;
+	void disconnectAccept(SocketVisitor& v) override;
+	
+	void connectVisit(InputVisitor& v) override;
+	void connectVisit(SourceVisitor& v) override;
+	
+	void disconnectVisit(InputVisitor& v) override;
+	void disconnectVisit(SourceVisitor& v) override;
 };

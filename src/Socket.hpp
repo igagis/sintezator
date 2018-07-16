@@ -17,6 +17,5 @@ private:
 	void onDisconnected(WireSocket& from) override;
 	
 public:
-	SocketVisitor* connectVisitor = nullptr;
-	SocketVisitor* disconnectVisitor = nullptr;
+	SocketVisitor* visitor = nullptr;
 };

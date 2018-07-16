@@ -13,17 +13,14 @@ public:
 	
 	InputVisitor(const InputVisitor&) = delete;
 	InputVisitor& operator=(const InputVisitor&) = delete;
+
+	void connectAccept(SocketVisitor& v) override;
 	
-private:
-
-};
-
-class ConnectInputVisitor : public InputVisitor{
-public:
-	ConnectInputVisitor(aumiks::Input<std::int32_t>& input);
+	void disconnectAccept(SocketVisitor& v) override;
 	
-	void accept(SocketVisitor& v) override;
-
-	void visit(SourceVisitor& v) override;
-	void visit(InputVisitor& v) override;
+	void connectVisit(InputVisitor& v) override;
+	void connectVisit(SourceVisitor& v) override;
+	
+	void disconnectVisit(InputVisitor& v) override;
+	void disconnectVisit(SourceVisitor& v) override;
 };

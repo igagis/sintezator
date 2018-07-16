@@ -3,6 +3,7 @@
 #include "Block.hpp"
 
 #include "SineSource.hpp"
+#include "SourceVisitor.hpp"
 
 class SineSourceBlock : public Block{
 public:
@@ -12,6 +13,7 @@ public:
 	SineSourceBlock& operator=(const SineSourceBlock&) = delete;
 private:
 
-	std::shared_ptr<SineSource> src;
+	std::shared_ptr<SineSource> source;
+	SourceVisitor sourceVisitor;
 	
 };

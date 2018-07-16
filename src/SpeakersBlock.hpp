@@ -7,7 +7,7 @@
 
 class SpeakersBlock : public Block{
 	std::unique_ptr<aumiks::Sink<std::int32_t>> sink;
-	ConnectInputVisitor connectInputVisitor;
+	InputVisitor inputVisitor;
 public:
 	SpeakersBlock();
 	

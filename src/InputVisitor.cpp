@@ -7,19 +7,27 @@ InputVisitor::InputVisitor(aumiks::Input<std::int32_t>& input) :
 {
 }
 
-ConnectInputVisitor::ConnectInputVisitor(aumiks::Input<std::int32_t>& input) :
-		InputVisitor(input)
-{
+void InputVisitor::connectAccept(SocketVisitor& v) {
+	v.connectVisit(*this);
 }
 
-void ConnectInputVisitor::accept(SocketVisitor& v) {
-	v.visit(*this);
+void InputVisitor::disconnectAccept(SocketVisitor& v) {
+	v.disconnectVisit(*this);
 }
 
-void ConnectInputVisitor::visit(SourceVisitor& v) {
+
+void InputVisitor::connectVisit(SourceVisitor& v) {
 	this->input.connect(v.source);
 }
 
-void ConnectInputVisitor::visit(InputVisitor& v){
+void InputVisitor::connectVisit(InputVisitor& v){
+	//do nothing
+}
+
+void InputVisitor::disconnectVisit(SourceVisitor& v) {
+	this->input.disconnect();
+}
+
+void InputVisitor::disconnectVisit(InputVisitor& v) {
 	//do nothing
 }

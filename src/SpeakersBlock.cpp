@@ -24,11 +24,11 @@ SpeakersBlock::SpeakersBlock():
 		Widget(nullptr),
 		Block(stob::parse(layout_c).get()),
 		sink(utki::makeUnique<aumiks::StereoSink>(audout::SamplingRate_e::HZ_44100)),
-		connectInputVisitor(this->sink->input())
+		inputVisitor(this->sink->input())
 {
 	auto& inputSocket = this->getByName("input").getByNameAs<Socket>("ws");
 	
-	inputSocket.connectVisitor = &this->connectInputVisitor;
+	inputSocket.visitor = &this->inputVisitor;
 	
 	this->sink->start();
 }

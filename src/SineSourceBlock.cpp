@@ -1,4 +1,5 @@
 #include "SineSourceBlock.hpp"
+#include "Socket.hpp"
 
 namespace{
 const char* layout_c = R"qwertyuiop(
@@ -20,6 +21,10 @@ const char* layout_c = R"qwertyuiop(
 SineSourceBlock::SineSourceBlock() :
 		Widget(nullptr),
 		Block(stob::parse(layout_c).get()),
-		src(std::make_shared<SineSource>(440))
+		source(std::make_shared<SineSource>(440)),
+		sourceVisitor(this->source)
 {
+	auto& outputSocket = this->getByName("output").getByNameAs<Socket>("ws");
+	
+	outputSocket.visitor = &this->sourceVisitor;
 }

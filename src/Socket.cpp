@@ -11,13 +11,19 @@ void Socket::onConnected(WireSocket& to) {
 	ASSERT(dynamic_cast<Socket*>(&to))
 	auto& remote = dynamic_cast<Socket&>(to);
 	
-	if(!this->connectVisitor || !remote.connectVisitor){
+	if(!this->visitor || !remote.visitor){
 		return;
 	}
-	this->connectVisitor->accept(*remote.connectVisitor);
+	this->visitor->connectAccept(*remote.visitor);
 }
 
 void Socket::onDisconnected(WireSocket& from) {
 	ASSERT(dynamic_cast<Socket*>(&from))
+	auto& remote = dynamic_cast<Socket&>(from);
+	
+	if(!this->visitor || !remote.visitor){
+		return;
+	}
+	this->visitor->disconnectAccept(*remote.visitor);
 }
 
