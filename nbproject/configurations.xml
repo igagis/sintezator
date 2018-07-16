@@ -8,6 +8,8 @@
       <in>App.hpp</in>
       <in>Block.cpp</in>
       <in>Block.hpp</in>
+      <in>InputVisitor.cpp</in>
+      <in>InputVisitor.hpp</in>
       <in>Path.cpp</in>
       <in>PathVba.cpp</in>
       <in>PathVba.hpp</in>
@@ -17,6 +19,9 @@
       <in>SineSourceBlock.hpp</in>
       <in>Socket.cpp</in>
       <in>Socket.hpp</in>
+      <in>SocketVisitor.hpp</in>
+      <in>SourceVisitor.cpp</in>
+      <in>SourceVisitor.hpp</in>
       <in>SpeakersBlock.cpp</in>
       <in>SpeakersBlock.hpp</in>
       <in>WireArea.cpp</in>
@@ -78,6 +83,10 @@
       </item>
       <item path="src/Block.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/InputVisitor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/InputVisitor.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Path.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -97,6 +106,12 @@
       <item path="src/Socket.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Socket.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SocketVisitor.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SourceVisitor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SourceVisitor.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/SpeakersBlock.cpp" ex="false" tool="1" flavor2="0">
       </item>

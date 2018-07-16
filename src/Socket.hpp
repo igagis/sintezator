@@ -2,6 +2,8 @@
 
 #include "WireSocket.hpp"
 
+#include "SocketVisitor.hpp"
+
 class Socket : public WireSocket{
 public:
 	Socket(const stob::Node* chain);
@@ -14,5 +16,7 @@ private:
 	void onConnected(WireSocket& to) override;
 	void onDisconnected(WireSocket& from) override;
 	
+public:
+	SocketVisitor* connectVisitor = nullptr;
+	SocketVisitor* disconnectVisitor = nullptr;
 };
-
