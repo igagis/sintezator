@@ -1,8 +1,8 @@
 #include "App.hpp"
 #include "Block.hpp"
 #include "SpeakersBlock.hpp"
-#include "InputSocket.hpp"
-#include "OutputSocket.hpp"
+#include "Socket.hpp"
+#include "SineSourceBlock.hpp"
 
 
 App::App() :
@@ -16,8 +16,7 @@ App::App() :
 
 	morda::inst().inflater.registerType<Block>("Block");
 	morda::inst().inflater.registerType<WireArea>("WiredArea");
-	morda::inst().inflater.registerType<InputSocket>("InputSocket");
-	morda::inst().inflater.registerType<OutputSocket>("OutputSocket");
+	morda::inst().inflater.registerType<Socket>("Socket");
 
 	auto c = morda::Morda::inst().inflater.inflate(
 			*this->getResFile("res/main.gui")
@@ -26,6 +25,7 @@ App::App() :
 	{
 		auto& wa = c->getByNameAs<WireArea>("wireArea");
 		wa.add(std::make_shared<SpeakersBlock>());
+		wa.add(std::make_shared<SineSourceBlock>());
 		
 		auto in11 = c->findByName("in11")->findByNameAs<WireSocket>("ws");
 		ASSERT(in11)

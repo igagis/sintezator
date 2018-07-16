@@ -8,15 +8,13 @@
       <in>App.hpp</in>
       <in>Block.cpp</in>
       <in>Block.hpp</in>
-      <in>InputSocket.cpp</in>
-      <in>InputSocket.hpp</in>
-      <in>OutputSocket.cpp</in>
-      <in>OutputSocket.hpp</in>
       <in>Path.cpp</in>
       <in>PathVba.cpp</in>
       <in>PathVba.hpp</in>
       <in>SineSource.cpp</in>
       <in>SineSource.hpp</in>
+      <in>SineSourceBlock.cpp</in>
+      <in>SineSourceBlock.hpp</in>
       <in>Socket.cpp</in>
       <in>Socket.hpp</in>
       <in>SpeakersBlock.cpp</in>
@@ -80,14 +78,6 @@
       </item>
       <item path="src/Block.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/InputSocket.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/InputSocket.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/OutputSocket.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/OutputSocket.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/Path.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -99,6 +89,10 @@
       <item path="src/SineSource.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SineSource.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SineSourceBlock.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SineSourceBlock.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Socket.cpp" ex="false" tool="1" flavor2="0">
       </item>

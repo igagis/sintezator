@@ -11,5 +11,8 @@ public:
 	
 private:
 
+	void onConnected(WireSocket& to) override;
+	void onDisconnected(WireSocket& from) override;
+	
 };
 

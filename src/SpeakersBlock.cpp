@@ -1,6 +1,6 @@
 #include "SpeakersBlock.hpp"
-#include "WireSocket.hpp"
 
+#include "Socket.hpp"
 
 namespace{
 const char* layout_c = R"qwertyuiop(
@@ -25,9 +25,9 @@ SpeakersBlock::SpeakersBlock():
 		Block(stob::parse(layout_c).get()),
 		sink(utki::makeUnique<aumiks::StereoSink>(audout::SamplingRate_e::HZ_44100))
 {
-//	auto& inputSocket = this->getByName("input").getByNameAs<WireSocket>("ws");
+//	auto& inputSocket = this->getByName("input").getByNameAs<Socket>("ws");
 	
-//	inputSocket.userData = &this->sink->input();
+	//inputSocket.input = &this->sink->input();
 	
-	
+	this->sink->start();
 }

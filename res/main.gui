@@ -5,7 +5,7 @@ defs{
 				text{@{text}}
 				color{0xff0000ff}
 			}
-			InputSocket{
+			Socket{
 				name{ws}
 				outlet{@{outlet}}
 				layout{dx{fill} dy{fill}}
@@ -19,7 +19,7 @@ defs{
 				text{@{text}}
 				color{0xff00ff00}
 			}
-			OutputSocket{
+			Socket{
 				name{ws}
 				outlet{@{outlet}}
 				layout{dx{fill} dy{fill}}
