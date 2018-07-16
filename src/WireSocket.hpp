@@ -26,6 +26,7 @@ public:
 protected:
 	WireSocket(const stob::Node* chain);
 	
+	std::shared_ptr<WireSocket> getRemote();
 public:
 
 	/**

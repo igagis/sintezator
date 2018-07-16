@@ -88,10 +88,18 @@ bool WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, morda::Mous
 	
 	if(auto wa = this->findAncestor<WireArea>()){
 		if(isDown){
-			wa->grabbedSocket = this->sharedFromThis(this);
+			std::shared_ptr<WireSocket> grabbedSocket;
+			if(auto p = this->getRemote()){
+				p->disconnect();
+				grabbedSocket = std::move(p);
+			}else{
+				grabbedSocket = this->sharedFromThis(this);
+			}
+			
+			wa->grabbedSocket = std::move(grabbedSocket);
 			wa->mousePos = this->calcPosInParent(pos, wa);
 		}else{
-			this->connect(wa->hoveredSocket);
+			wa->grabbedSocket->connect(wa->hoveredSocket);
 			wa->grabbedSocket.reset();
 		}
 		return true;
@@ -110,4 +118,16 @@ void WireSocket::onHoverChanged(unsigned pointerID) {
 			}
 		}
 	}
+}
+
+std::shared_ptr<WireSocket> WireSocket::getRemote() {
+	if(this->slave){
+		return this->slave;
+	}
+	
+	if(auto p = this->primary.lock()){
+		return p;
+	}
+	
+	return nullptr;
 }
