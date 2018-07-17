@@ -17,8 +17,6 @@ public:
 	void disconnectAccept(SocketVisitor& v) override;
 	
 	void connectVisit(InputVisitor& v) override;
-	void connectVisit(SourceVisitor& v) override;
 	
 	void disconnectVisit(InputVisitor& v) override;
-	void disconnectVisit(SourceVisitor& v) override;
 };

@@ -18,14 +18,6 @@ void SourceVisitor::connectVisit(InputVisitor& v) {
 	v.input.connect(this->source);
 }
 
-void SourceVisitor::connectVisit(SourceVisitor& v) {
-	//do nothing
-}
-
 void SourceVisitor::disconnectVisit(InputVisitor& v) {
 	v.input.disconnect();
-}
-
-void SourceVisitor::disconnectVisit(SourceVisitor& v) {
-	//do nothing
 }

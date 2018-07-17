@@ -20,14 +20,6 @@ void InputVisitor::connectVisit(SourceVisitor& v) {
 	this->input.connect(v.source);
 }
 
-void InputVisitor::connectVisit(InputVisitor& v){
-	//do nothing
-}
-
 void InputVisitor::disconnectVisit(SourceVisitor& v) {
 	this->input.disconnect();
-}
-
-void InputVisitor::disconnectVisit(InputVisitor& v) {
-	//do nothing
 }
