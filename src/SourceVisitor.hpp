@@ -6,9 +6,9 @@
 
 class SourceVisitor : public SocketVisitor{
 public:
-	std::shared_ptr<aumiks::Source<std::int32_t>> source;
+	std::shared_ptr<aumiks::Source> source;
 	
-	SourceVisitor(std::shared_ptr<aumiks::Source<std::int32_t>> source);
+	SourceVisitor(std::shared_ptr<aumiks::Source> source);
 	
 	SourceVisitor(const SourceVisitor&) = delete;
 	SourceVisitor& operator=(const SourceVisitor&) = delete;

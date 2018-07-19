@@ -7,9 +7,9 @@
 
 class InputVisitor : public SocketVisitor{
 public:
-	aumiks::Input<std::int32_t>& input;
+	aumiks::Input& input;
 	
-	InputVisitor(aumiks::Input<std::int32_t>& input);
+	InputVisitor(aumiks::Input& input);
 	
 	InputVisitor(const InputVisitor&) = delete;
 	InputVisitor& operator=(const InputVisitor&) = delete;

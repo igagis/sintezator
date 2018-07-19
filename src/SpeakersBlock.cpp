@@ -23,8 +23,8 @@ const char* layout_c = R"qwertyuiop(
 SpeakersBlock::SpeakersBlock():
 		Widget(nullptr),
 		Block(stob::parse(layout_c).get()),
-		sink(utki::makeUnique<aumiks::StereoSink>(audout::SamplingRate_e::HZ_44100)),
-		inputVisitor(this->sink->input())
+		sink(utki::makeUnique<aumiks::Speakers>(audout::SamplingRate_e::HZ_44100)),
+		inputVisitor(this->sink->input)
 {
 	auto& inputSocket = this->getByName("input").getByNameAs<Socket>("ws");
 	

@@ -3,10 +3,10 @@
 #include "Block.hpp"
 #include "InputVisitor.hpp"
 
-#include <aumiks/SpeakersSink.hpp>
+#include <aumiks/Speakers.hpp>
 
 class SpeakersBlock : public Block{
-	std::unique_ptr<aumiks::Sink<std::int32_t>> sink;
+	std::unique_ptr<aumiks::Sink> sink;
 	InputVisitor inputVisitor;
 public:
 	SpeakersBlock();
