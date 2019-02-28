@@ -6,7 +6,7 @@
 
 
 App::App() :
-		mordavokne::App([](){
+		mordavokne::App("sintezator", [](){
 			return mordavokne::App::WindowParams(kolme::Vec2ui(320, 480));
 		}())
 {
@@ -21,12 +21,12 @@ App::App() :
 	auto c = morda::Morda::inst().inflater.inflate(
 			*this->getResFile("res/main.gui")
 		);
-	
+
 	{
 		auto& wa = c->getByNameAs<WireArea>("wireArea");
 		wa.add(std::make_shared<SpeakersBlock>());
 		wa.add(std::make_shared<SineSourceBlock>());
-		
+
 		auto in11 = c->findByName("in11")->findByNameAs<WireSocket>("ws");
 		ASSERT(in11)
 		auto in12 = c->findByName("in12")->findByNameAs<WireSocket>("ws");

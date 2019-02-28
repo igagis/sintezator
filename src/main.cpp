@@ -4,6 +4,6 @@
 
 
 
-std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv, const utki::Buf<std::uint8_t> savedState){
+std::unique_ptr<mordavokne::App> mordavokne::createApp(int argc, const char** argv){
 	return utki::makeUnique<::App>();
 }
