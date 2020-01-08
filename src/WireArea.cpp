@@ -14,7 +14,7 @@ const std::uint32_t defaultGrabbedColor_c = 0xff808080;
 }
 
 WireArea::WireArea(const stob::Node* chain) :
-		Widget(chain),
+		widget(chain),
 		SizeContainer(chain)
 {
 	if(auto p = morda::getProperty(chain, "wireWidth")){
@@ -38,7 +38,7 @@ WireArea::WireArea(const stob::Node* chain) :
 
 
 void WireArea::render(const morda::Matr4r& matrix) const {
-	this->Container::render(matrix);
+	this->container::render(matrix);
 	
 	for(auto& s : this->sockets){
 		if(!s->slave){
@@ -47,8 +47,8 @@ void WireArea::render(const morda::Matr4r& matrix) const {
 		
 		auto primOutletPos = s->outletPos();
 		auto slaveOutletPos = s->slave->outletPos();
-		auto p0 = s->calcPosInParent(primOutletPos[0], this);
-		auto p = s->slave->calcPosInParent(slaveOutletPos[0], this) - p0;
+		auto p0 = s->pos_in_ancestor(primOutletPos[0], this);
+		auto p = s->slave->pos_in_ancestor(slaveOutletPos[0], this) - p0;
 		
 		Path path;
 		path.cubicTo(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);
@@ -60,7 +60,7 @@ void WireArea::render(const morda::Matr4r& matrix) const {
 	
 	if(this->grabbedSocket){
 		auto outletPos = this->grabbedSocket->outletPos();
-		auto p0 = this->grabbedSocket->calcPosInParent(outletPos[0], this);
+		auto p0 = this->grabbedSocket->pos_in_ancestor(outletPos[0], this);
 		
 		Path path;
 		path.lineTo(mousePos - p0);
@@ -75,13 +75,13 @@ bool WireArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
 	if(this->grabbedSocket){
 		this->mousePos = pos;
 	}
-	return this->Container::onMouseMove(pos, pointerID);;
+	return this->container::onMouseMove(pos, pointerID);;
 }
 
 
 void WireArea::layOut() {
 	this->SizeContainer::layOut();
 	
-	this->sockets = this->find<WireSocket>();
+	this->sockets = this->get_all_widgets<WireSocket>();
 	TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)
 }

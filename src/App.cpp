@@ -7,16 +7,16 @@
 
 App::App() :
 		mordavokne::App("sintezator", [](){
-			return mordavokne::App::WindowParams(kolme::Vec2ui(320, 480));
+			return mordavokne::App::WindowParams(r4::vec2ui(320, 480));
 		}())
 {
 	morda::inst().initStandardWidgets(*this->getResFile());
 
 	//		morda::inst().resMan.mountResPack(*this->getResFile("res/"));
 
-	morda::inst().inflater.registerType<Block>("Block");
-	morda::inst().inflater.registerType<WireArea>("WiredArea");
-	morda::inst().inflater.registerType<Socket>("Socket");
+	morda::inst().inflater.register_widget<Block>("Block");
+	morda::inst().inflater.register_widget<WireArea>("WiredArea");
+	morda::inst().inflater.register_widget<Socket>("Socket");
 
 	auto c = morda::Morda::inst().inflater.inflate(
 			*this->getResFile("res/main.gui")
@@ -24,8 +24,8 @@ App::App() :
 
 	{
 		auto& wa = c->getByNameAs<WireArea>("wireArea");
-		wa.add(std::make_shared<SpeakersBlock>());
-		wa.add(std::make_shared<SineSourceBlock>());
+		wa.push_back(std::make_shared<SpeakersBlock>());
+		wa.push_back(std::make_shared<SineSourceBlock>());
 
 		auto in11 = c->findByName("in11")->findByNameAs<WireSocket>("ws");
 		ASSERT(in11)

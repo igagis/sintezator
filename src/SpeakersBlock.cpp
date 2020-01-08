@@ -10,7 +10,7 @@ const char* layout_c = R"qwertyuiop(
 		}
 		Left{
 			InSocket{
-				name{input}
+				id{input}
 				outlet{left}
 				text{input}
 			}
@@ -21,7 +21,7 @@ const char* layout_c = R"qwertyuiop(
 
 
 SpeakersBlock::SpeakersBlock():
-		Widget(nullptr),
+		widget(nullptr),
 		Block(stob::parse(layout_c).get()),
 		sink(utki::makeUnique<aumiks::Speakers>(audout::SamplingRate_e::HZ_44100)),
 		inputVisitor(this->sink->input)

@@ -8,7 +8,7 @@ SineSource::SineSource(float freq) :
 {
 }
 
-bool SineSource::fillSampleBuffer(utki::Buf<aumiks::Frame> buf)noexcept{
+bool SineSource::fillSampleBuffer(utki::span<aumiks::Frame> buf)noexcept{
 	for (auto d = buf.begin(), e = buf.end(); d != e; ++d) {
 		using std::sin;
 		using utki::pi;

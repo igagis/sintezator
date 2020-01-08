@@ -9,7 +9,7 @@ const char* layout_c = R"qwertyuiop(
 		}
 		Right{
 			OutSocket{
-				name{output}
+				id{output}
 				outlet{right}
 				text{output}
 			}
@@ -19,7 +19,7 @@ const char* layout_c = R"qwertyuiop(
 }
 
 SineSourceBlock::SineSourceBlock() :
-		Widget(nullptr),
+		widget(nullptr),
 		Block(stob::parse(layout_c).get()),
 		source(std::make_shared<SineSource>(440)),
 		sourceVisitor(this->source)

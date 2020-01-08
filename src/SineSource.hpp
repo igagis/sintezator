@@ -9,5 +9,5 @@ class SineSource : public aumiks::Source{
 public:
 	SineSource(float freq);
 	
-	bool fillSampleBuffer(utki::Buf<aumiks::Frame> buf)noexcept override;
+	bool fillSampleBuffer(utki::span<aumiks::Frame> buf)noexcept override;
 };

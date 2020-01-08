@@ -5,7 +5,7 @@
 #include <morda/util/util.hpp>
 
 WireSocket::WireSocket(const stob::Node* chain) :
-		Widget(chain)
+		widget(chain)
 {
 	this->outlet_v = Outlet_e::BOTTOM;
 	
@@ -86,7 +86,7 @@ bool WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, morda::Mous
 		return false;
 	}
 	
-	if(auto wa = this->findAncestor<WireArea>()){
+	if(auto wa = this->find_ancestor<WireArea>()){
 		if(isDown){
 			std::shared_ptr<WireSocket> grabbedSocket;
 			if(auto p = this->getRemote()){
@@ -97,7 +97,7 @@ bool WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, morda::Mous
 			}
 			
 			wa->grabbedSocket = std::move(grabbedSocket);
-			wa->mousePos = this->calcPosInParent(pos, wa);
+			wa->mousePos = this->pos_in_ancestor(pos, wa);
 		}else{
 			wa->grabbedSocket->connect(wa->hoveredSocket);
 			wa->grabbedSocket.reset();
@@ -107,10 +107,10 @@ bool WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, morda::Mous
 	return false;
 }
 
-void WireSocket::onHoverChanged(unsigned pointerID) {
+void WireSocket::on_hover_changed(unsigned pointerID) {
 //	TRACE(<< "Hover changed: " << this->isHovered() << " " << this << std::endl)
-	if(auto wa = this->findAncestor<WireArea>()){
-		if(this->isHovered()){
+	if(auto wa = this->find_ancestor<WireArea>()){
+		if(this->is_hovered()){
 			wa->hoveredSocket = this->sharedFromThis(this);
 		}else{
 			if(wa->hoveredSocket.get() == this){

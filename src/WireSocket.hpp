@@ -1,8 +1,8 @@
 #pragma once
 
-#include <morda/widgets/Widget.hpp>
+#include <morda/widgets/widget.hpp>
 
-class WireSocket : virtual public morda::Widget{
+class WireSocket : virtual public morda::widget{
 	friend class WireArea;
 
 	unsigned groupId;
@@ -52,7 +52,7 @@ public:
 
 	bool onMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) override;
 
-	void onHoverChanged(unsigned pointerID) override;
+	void on_hover_changed(unsigned pointerID) override;
 	
 	/**
 	 * @brief Connection event callback.

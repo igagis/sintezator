@@ -28,7 +28,7 @@ private:
 	std::shared_ptr<WireSocket> grabbedSocket;
 	std::shared_ptr<WireSocket> hoveredSocket;
 	
-	std::list<std::shared_ptr<WireSocket>> sockets;
+	std::vector<std::shared_ptr<WireSocket>> sockets;
 
 };
 

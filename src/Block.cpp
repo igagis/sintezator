@@ -6,18 +6,18 @@
 namespace{
 const char* blockLayout_c = R"qwertyuiop(
 	MouseProxy{
-		name{mouseProxy}
+		id{mouseProxy}
 		layout{dx{fill} dy{fill}}
 	}
 	NinePatch{
-		name{ninePatch}
+		id{ninePatch}
 
 		image{morda_npt_window_bg}
 
-		left{@{morda_window_border_size}}
-		top{@{morda_window_border_size}}
-		right{@{morda_window_border_size}}
-		bottom{@{morda_window_border_size}}
+		left{${morda_window_border_size}}
+		top{${morda_window_border_size}}
+		right{${morda_window_border_size}}
+		bottom{${morda_window_border_size}}
 	}
 )qwertyuiop";
 }
@@ -34,7 +34,7 @@ Block::Block(const stob::Node* chain) :
 	
 	auto& mp = this->getByNameAs<morda::MouseProxy>("mouseProxy");
 	
-	mp.mouseButton = decltype(morda::MouseProxy::mouseButton)([this](Widget& widget, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId){
+	mp.mouseButton = decltype(morda::MouseProxy::mouseButton)([this](widget& widget, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId){
 		if(button != morda::MouseButton_e::LEFT){
 			return false;
 		}
@@ -48,7 +48,7 @@ Block::Block(const stob::Node* chain) :
 		return false;
 	});
 	
-	mp.mouseMove = [this](Widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+	mp.mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
 		if(this->captured){
 			this->moveBy(pos - this->capturePoint);
 			return true;
