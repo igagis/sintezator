@@ -7,7 +7,7 @@ class Block :
 	virtual public morda::Widget
 {
 public:
-	Block(const stob::Node* chain);
+	Block(const puu::forest& desc);
 	
 	Block(const Block&) = delete;
 	Block& operator=(const Block&) = delete;

@@ -8,31 +8,24 @@
 namespace{
 const morda::real antialiasWidth_c = morda::real(0.55f);
 const morda::real splineControlLength_c = morda::real(100);
-const morda::real deafultWireHalfWidth_c = morda::real(0.25f);
-const std::uint32_t defaultWireColor_c = 0xff0000ff;
-const std::uint32_t defaultGrabbedColor_c = 0xff808080;
 }
 
-WireArea::WireArea(const stob::Node* chain) :
-		widget(chain),
-		SizeContainer(chain)
+WireArea::WireArea(const puu::forest& desc) :
+		widget(desc),
+		SizeContainer(desc)
 {
-	if(auto p = morda::getProperty(chain, "wireWidth")){
-		this->wireHalfWidth = morda::real(p->asFloat()) / 2;
-	}else{
-		this->wireHalfWidth = deafultWireHalfWidth_c;
-	}
-	
-	if(auto p = morda::getProperty(chain, "wireColor")){
-		this->wireColor = p->asUint32();
-	}else{
-		this->wireColor = defaultWireColor_c;
-	}
-	
-	if(auto p = morda::getProperty(chain, "grabbedColor")){
-		this->grabbedColor = p->asUint32();
-	}else{
-		this->grabbedColor = defaultGrabbedColor_c;
+	for(const auto& p : desc){
+		if(!morda::is_property(p)){
+			continue;
+		}
+
+		if(p.value == "wireWidth"){
+			this->wireHalfWidth = morda::get_property_value(p).to_float() / 2;
+		}else if(p.value == "wireColor"){
+			this->wireColor = morda::get_property_value(p).to_uint32();
+		}else if(p.value == "grabbedColor"){
+			this->grabbedColor = morda::get_property_value(p).to_uint32();
+		}
 	}
 }
 

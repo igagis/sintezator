@@ -4,20 +4,25 @@
 
 #include <morda/util/util.hpp>
 
-WireSocket::WireSocket(const stob::Node* chain) :
-		widget(chain)
+WireSocket::WireSocket(const puu::forest& desc) :
+		widget(desc)
 {
-	this->outlet_v = Outlet_e::BOTTOM;
-	
-	if (auto p = morda::getProperty(chain, "outlet")) {
-		if (std::string("left") == p->value()) {
-			this->outlet_v = Outlet_e::LEFT;
-		}else if (std::string("right") == p->value()) {
-			this->outlet_v = Outlet_e::RIGHT;
-		}else if (std::string("top") == p->value()) {
-			this->outlet_v = Outlet_e::TOP;
-		}else if (std::string("bottom") == p->value()) {
-			this->outlet_v = Outlet_e::BOTTOM;
+	for(const auto& p : desc){
+		if(!morda::is_property(p)){
+			continue;
+		}
+
+		if(p.value == "outlet"){
+			auto v = morda::get_property_value(p);
+			if(p.value == "left"){
+				this->outlet_v = Outlet_e::LEFT;
+			}else if(p.value == "right"){
+				this->outlet_v = Outlet_e::RIGHT;
+			}else if(p.value == "top"){
+				this->outlet_v = Outlet_e::TOP;
+			}else if(p.value == "bottom"){
+				this->outlet_v = Outlet_e::BOTTOM;
+			}
 		}
 	}
 }

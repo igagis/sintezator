@@ -3,7 +3,7 @@
 #include "Socket.hpp"
 
 namespace{
-const char* layout_c = R"qwertyuiop(
+const auto layout_c = puu::read(R"qwertyuiop(
 	Column{
 		Text{
 			text{Speakers}
@@ -16,13 +16,13 @@ const char* layout_c = R"qwertyuiop(
 			}
 		}
 	}
-)qwertyuiop";
+)qwertyuiop");
 }
 
 
 SpeakersBlock::SpeakersBlock():
-		widget(nullptr),
-		Block(stob::parse(layout_c).get()),
+		widget(puu::forest()),
+		Block(layout_c),
 		sink(utki::makeUnique<aumiks::Speakers>(audout::SamplingRate_e::HZ_44100)),
 		inputVisitor(this->sink->input)
 {

@@ -4,7 +4,7 @@
 #include <morda/widgets/proxy/MouseProxy.hpp>
 
 namespace{
-const char* blockLayout_c = R"qwertyuiop(
+const auto blockLayout_c = puu::read(R"qwertyuiop(
 	MouseProxy{
 		id{mouseProxy}
 		layout{dx{fill} dy{fill}}
@@ -19,18 +19,16 @@ const char* blockLayout_c = R"qwertyuiop(
 		right{${morda_window_border_size}}
 		bottom{${morda_window_border_size}}
 	}
-)qwertyuiop";
+)qwertyuiop");
 }
 
 
-Block::Block(const stob::Node* chain) :
-		morda::Widget(chain),
-		morda::Pile(stob::parse(blockLayout_c).get()),
+Block::Block(const puu::forest& desc) :
+		morda::Widget(desc),
+		morda::Pile(blockLayout_c),
 		content(this->getByNameAs<morda::NinePatch>("ninePatch").content())
 {
-	if(chain){
-		this->content.add(*chain);
-	}
+	this->content.inflate_push_back(desc);
 	
 	auto& mp = this->getByNameAs<morda::MouseProxy>("mouseProxy");
 	

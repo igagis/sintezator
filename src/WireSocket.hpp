@@ -14,7 +14,7 @@ public:
 		BOTTOM
 	};
 private:
-	Outlet_e outlet_v;
+	Outlet_e outlet_v = Outlet_e::BOTTOM;
 
 	std::weak_ptr<WireSocket> primary;
 	std::shared_ptr<WireSocket> slave;
@@ -24,7 +24,7 @@ public:
 	WireSocket& operator=(const WireSocket&) = delete;
 
 protected:
-	WireSocket(const stob::Node* chain);
+	WireSocket(const puu::forest& desc);
 	
 	std::shared_ptr<WireSocket> getRemote();
 public:

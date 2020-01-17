@@ -2,7 +2,7 @@
 #include "Socket.hpp"
 
 namespace{
-const char* layout_c = R"qwertyuiop(
+const auto layout_c = puu::read(R"qwertyuiop(
 	Column{
 		Text{
 			text{"Sine Wave"}
@@ -15,12 +15,12 @@ const char* layout_c = R"qwertyuiop(
 			}
 		}
 	}
-)qwertyuiop";
+)qwertyuiop");
 }
 
 SineSourceBlock::SineSourceBlock() :
-		widget(nullptr),
-		Block(stob::parse(layout_c).get()),
+		widget(puu::forest()),
+		Block(layout_c),
 		source(std::make_shared<SineSource>(440)),
 		sourceVisitor(this->source)
 {

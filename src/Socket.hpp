@@ -6,7 +6,7 @@
 
 class Socket : public WireSocket{
 public:
-	Socket(const stob::Node* chain);
+	Socket(const puu::forest& desc);
 	
 	Socket(const Socket&) = delete;
 	Socket& operator=(const Socket&) = delete;

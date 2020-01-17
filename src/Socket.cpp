@@ -1,9 +1,9 @@
 #include "Socket.hpp"
 
 
-Socket::Socket(const stob::Node* chain) :
-		morda::Widget(chain),
-		WireSocket(chain)
+Socket::Socket(const puu::forest& desc) :
+		morda::Widget(desc),
+		WireSocket(desc)
 {
 }
 
