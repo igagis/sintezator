@@ -23,13 +23,13 @@ App::App() :
 		);
 
 	{
-		auto& wa = c->getByNameAs<WireArea>("wireArea");
+		auto& wa = c->get_widget_as<WireArea>("wireArea");
 		wa.push_back(std::make_shared<SpeakersBlock>());
 		wa.push_back(std::make_shared<SineSourceBlock>());
 
-		auto in11 = c->findByName("in11")->findByNameAs<WireSocket>("ws");
+		auto in11 = c->try_get_widget("in11")->try_get_widget_as<WireSocket>("ws");
 		ASSERT(in11)
-		auto in12 = c->findByName("in12")->findByNameAs<WireSocket>("ws");
+		auto in12 = c->try_get_widget("in12")->try_get_widget_as<WireSocket>("ws");
 		ASSERT(in12)
 		in11->connect(in12);
 	}

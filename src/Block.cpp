@@ -26,11 +26,11 @@ const auto blockLayout_c = puu::read(R"qwertyuiop(
 Block::Block(const puu::forest& desc) :
 		morda::Widget(desc),
 		morda::Pile(blockLayout_c),
-		content(this->getByNameAs<morda::NinePatch>("ninePatch").content())
+		content(this->get_widget_as<morda::NinePatch>("ninePatch").content())
 {
 	this->content.inflate_push_back(desc);
 	
-	auto& mp = this->getByNameAs<morda::MouseProxy>("mouseProxy");
+	auto& mp = this->get_widget_as<morda::MouseProxy>("mouseProxy");
 	
 	mp.mouseButton = decltype(morda::MouseProxy::mouseButton)([this](widget& widget, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId){
 		if(button != morda::MouseButton_e::LEFT){

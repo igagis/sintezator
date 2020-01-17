@@ -24,7 +24,7 @@ SineSourceBlock::SineSourceBlock() :
 		source(std::make_shared<SineSource>(440)),
 		sourceVisitor(this->source)
 {
-	auto& outputSocket = this->getByName("output").getByNameAs<Socket>("ws");
+	auto& outputSocket = this->get_widget("output").get_widget_as<Socket>("ws");
 	
 	outputSocket.visitor = &this->sourceVisitor;
 }

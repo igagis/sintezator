@@ -26,7 +26,7 @@ SpeakersBlock::SpeakersBlock():
 		sink(utki::makeUnique<aumiks::Speakers>(audout::SamplingRate_e::HZ_44100)),
 		inputVisitor(this->sink->input)
 {
-	auto& inputSocket = this->getByName("input").getByNameAs<Socket>("ws");
+	auto& inputSocket = this->get_widget("input").get_widget_as<Socket>("ws");
 	
 	inputSocket.visitor = &this->inputVisitor;
 	
