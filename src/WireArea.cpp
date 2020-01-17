@@ -64,17 +64,17 @@ void WireArea::render(const morda::Matr4r& matrix) const {
 	}
 }
 
-bool WireArea::onMouseMove(const morda::Vec2r& pos, unsigned pointerID) {
+bool WireArea::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) {
 	if(this->grabbedSocket){
 		this->mousePos = pos;
 	}
-	return this->container::onMouseMove(pos, pointerID);;
+	return this->container::on_mouse_move(pos, pointerID);;
 }
 
 
-void WireArea::layOut() {
-	this->SizeContainer::layOut();
+void WireArea::lay_out() {
+	this->SizeContainer::lay_out();
 	
 	this->sockets = this->get_all_widgets<WireSocket>();
-	TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)
+	// TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)
 }

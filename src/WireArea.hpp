@@ -22,9 +22,9 @@ public:
 	
 	void render(const morda::Matr4r& matrix) const override;
 
-	void layOut() override;
+	void lay_out() override;
 	
-	bool onMouseMove(const morda::Vec2r& pos, unsigned pointerID) override;
+	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) override;
 
 private:
 	morda::Vec2r mousePos;

@@ -14,13 +14,13 @@ WireSocket::WireSocket(const puu::forest& desc) :
 
 		if(p.value == "outlet"){
 			auto v = morda::get_property_value(p);
-			if(p.value == "left"){
+			if(v == "left"){
 				this->outlet_v = Outlet_e::LEFT;
-			}else if(p.value == "right"){
+			}else if(v == "right"){
 				this->outlet_v = Outlet_e::RIGHT;
-			}else if(p.value == "top"){
+			}else if(v == "top"){
 				this->outlet_v = Outlet_e::TOP;
-			}else if(p.value == "bottom"){
+			}else if(v == "bottom"){
 				this->outlet_v = Outlet_e::BOTTOM;
 			}
 		}
@@ -86,7 +86,7 @@ std::array<morda::Vec2r, 2> WireSocket::outletPos() const noexcept{
 	return {{pos, dir}};
 }
 
-bool WireSocket::onMouseButton(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) {
+bool WireSocket::on_mouse_button(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) {
 	if(button != morda::MouseButton_e::LEFT){
 		return false;
 	}
