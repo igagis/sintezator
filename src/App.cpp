@@ -6,26 +6,26 @@
 
 
 App::App() :
-		mordavokne::App("sintezator", [](){
-			return mordavokne::App::WindowParams(r4::vec2ui(320, 480));
+		mordavokne::application("sintezator", [](){
+			return mordavokne::window_params(r4::vec2ui(320, 480));
 		}())
 {
-	morda::inst().initStandardWidgets(*this->getResFile());
+	this->gui.initStandardWidgets(*this->get_res_file());
 
 	//		morda::inst().resMan.mountResPack(*this->getResFile("res/"));
 
-	morda::inst().inflater.register_widget<Block>("Block");
-	morda::inst().inflater.register_widget<WireArea>("WiredArea");
-	morda::inst().inflater.register_widget<Socket>("Socket");
+	this->gui.context->inflater.register_widget<Block>("Block");
+	this->gui.context->inflater.register_widget<WireArea>("WiredArea");
+	this->gui.context->inflater.register_widget<Socket>("Socket");
 
-	auto c = morda::Morda::inst().inflater.inflate(
-			*this->getResFile("res/main.gui")
+	auto c = this->gui.context->inflater.inflate(
+			*this->get_res_file("res/main.gui")
 		);
 
 	{
 		auto& wa = c->get_widget_as<WireArea>("wireArea");
-		wa.push_back(std::make_shared<SpeakersBlock>());
-		wa.push_back(std::make_shared<SineSourceBlock>());
+		wa.push_back(std::make_shared<SpeakersBlock>(this->gui.context, puu::forest()));
+		wa.push_back(std::make_shared<SineSourceBlock>(this->gui.context, puu::forest()));
 
 		auto in11 = c->try_get_widget("in11")->try_get_widget_as<WireSocket>("ws");
 		ASSERT(in11)
@@ -34,7 +34,5 @@ App::App() :
 		in11->connect(in12);
 	}
 
-	morda::Morda::inst().setRootWidget(
-			std::move(c)
-		);
+	this->gui.set_root(std::move(c));
 }

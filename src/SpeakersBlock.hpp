@@ -9,7 +9,7 @@ class SpeakersBlock : public Block{
 	std::unique_ptr<aumiks::Sink> sink;
 	InputVisitor inputVisitor;
 public:
-	SpeakersBlock();
+	SpeakersBlock(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 	SpeakersBlock(const SpeakersBlock&) = delete;
 	SpeakersBlock& operator=(const SpeakersBlock&) = delete;

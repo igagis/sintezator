@@ -1,10 +1,10 @@
 #pragma once
 
-#include <mordavokne/App.hpp>
+#include <mordavokne/application.hpp>
 
 #include "WireArea.hpp"
 
-class App : public mordavokne::App{
+class App : public mordavokne::application{
 public:	
 	App();
 };

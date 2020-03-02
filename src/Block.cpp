@@ -1,15 +1,15 @@
 #include "Block.hpp"
 
-#include <morda/widgets/label/NinePatch.hpp>
-#include <morda/widgets/proxy/MouseProxy.hpp>
+#include <morda/widgets/label/nine_patch.hpp>
+#include <morda/widgets/proxy/mouse_proxy.hpp>
 
 namespace{
 const auto blockLayout_c = puu::read(R"qwertyuiop(
-	MouseProxy{
+	@mouse_proxy{
 		id{mouseProxy}
 		layout{dx{fill} dy{fill}}
 	}
-	NinePatch{
+	@nine_patch{
 		id{ninePatch}
 
 		image{morda_npt_window_bg}
@@ -23,17 +23,17 @@ const auto blockLayout_c = puu::read(R"qwertyuiop(
 }
 
 
-Block::Block(const puu::forest& desc) :
-		morda::Widget(desc),
-		morda::Pile(blockLayout_c),
-		content(this->get_widget_as<morda::NinePatch>("ninePatch").content())
+Block::Block(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		morda::widget(std::move(c), desc),
+		morda::pile(this->context, blockLayout_c),
+		content(this->get_widget_as<morda::nine_patch>("ninePatch").content())
 {
 	this->content.inflate_push_back(desc);
 	
-	auto& mp = this->get_widget_as<morda::MouseProxy>("mouseProxy");
+	auto& mp = this->get_widget_as<morda::mouse_proxy>("mouseProxy");
 	
-	mp.mouseButton = decltype(morda::MouseProxy::mouseButton)([this](widget& widget, bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerId){
-		if(button != morda::MouseButton_e::LEFT){
+	mp.mouse_button_handler = [this](widget& widget, bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerId){
+		if(button != morda::mouse_button::left){
 			return false;
 		}
 
@@ -44,11 +44,11 @@ Block::Block(const puu::forest& desc) :
 		}
 		this->captured = false;
 		return false;
-	});
+	};
 	
-	mp.mouseMove = [this](widget& widget, const morda::Vec2r& pos, unsigned pointerId){
+	mp.mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
 		if(this->captured){
-			this->moveBy(pos - this->capturePoint);
+			this->move_by(pos - this->capturePoint);
 			return true;
 		}
 		return false;

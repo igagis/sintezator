@@ -4,8 +4,8 @@
 
 #include <morda/util/util.hpp>
 
-WireSocket::WireSocket(const puu::forest& desc) :
-		widget(desc)
+WireSocket::WireSocket(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		morda::widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
 		if(!morda::is_property(p)){
@@ -28,7 +28,7 @@ WireSocket::WireSocket(const puu::forest& desc) :
 }
 
 void WireSocket::connect(const std::shared_ptr<WireSocket>& o) {
-	//disconnect existing connection
+	// disconnect existing connection
 	this->disconnect();
 	
 	if(!o || o.get() == this){
@@ -60,34 +60,34 @@ void WireSocket::disconnect() {
 
 
 
-std::array<morda::Vec2r, 2> WireSocket::outletPos() const noexcept{
-	morda::Vec2r dir;
-	morda::Vec2r pos;
+std::array<morda::vector2, 2> WireSocket::outletPos() const noexcept{
+	morda::vector2 dir;
+	morda::vector2 pos;
 	switch(this->outlet_v){
 		default:
 			ASSERT(false)
 		case Outlet_e::BOTTOM:
-			pos = this->rect().p + this->rect().d.compMul(morda::Vec2r(0.5, 1));
-			dir = morda::Vec2r(0, 1);
+			pos = this->rect().p + this->rect().d.comp_multiplied(morda::vector2(0.5, 1));
+			dir = morda::vector2(0, 1);
 			break;
 		case Outlet_e::LEFT:
-			pos = this->rect().p + this->rect().d.compMul(morda::Vec2r(0, 0.5));
-			dir = morda::Vec2r(-1, 0);
+			pos = this->rect().p + this->rect().d.comp_multiplied(morda::vector2(0, 0.5));
+			dir = morda::vector2(-1, 0);
 			break;
 		case Outlet_e::RIGHT:
-			pos = this->rect().p + this->rect().d.compMul(morda::Vec2r(1, 0.5));
-			dir = morda::Vec2r(1, 0);
+			pos = this->rect().p + this->rect().d.comp_multiplied(morda::vector2(1, 0.5));
+			dir = morda::vector2(1, 0);
 			break;
 		case Outlet_e::TOP:
-			pos = this->rect().p + this->rect().d.compMul(morda::Vec2r(0.5, 0));
-			dir = morda::Vec2r(0, -1);
+			pos = this->rect().p + this->rect().d.comp_multiplied(morda::vector2(0.5, 0));
+			dir = morda::vector2(0, -1);
 			break;
 	}
 	return {{pos, dir}};
 }
 
-bool WireSocket::on_mouse_button(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) {
-	if(button != morda::MouseButton_e::LEFT){
+bool WireSocket::on_mouse_button(bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerID) {
+	if(button != morda::mouse_button::left){
 		return false;
 	}
 	

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <morda/widgets/group/SizeContainer.hpp>
+#include <morda/widgets/group/size_container.hpp>
 
 #include "WireSocket.hpp"
 
-class WireArea : public morda::SizeContainer{
+class WireArea : public morda::size_container{
 	friend class WireSocket;
 	
 	const morda::real deafultWireHalfWidth_c = morda::real(0.25f);
@@ -18,16 +18,16 @@ public:
 	WireArea(const WireArea&) = delete;
 	WireArea& operator=(const WireArea&) = delete;
 	
-	WireArea(const puu::forest& desc);
+	WireArea(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	void render(const morda::Matr4r& matrix) const override;
+	void render(const morda::matrix4& matrix) const override;
 
 	void lay_out() override;
 	
-	bool on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) override;
+	bool on_mouse_move(const morda::vector2& pos, unsigned pointerID) override;
 
 private:
-	morda::Vec2r mousePos;
+	morda::vector2 mousePos;
 	
 	std::shared_ptr<WireSocket> grabbedSocket;
 	std::shared_ptr<WireSocket> hoveredSocket;

@@ -2,17 +2,17 @@
 #include "Path.hpp"
 #include "PathVba.hpp"
 
+#include <morda/context.hpp>
 #include <morda/util/util.hpp>
-#include <morda/Morda.hpp>
 
 namespace{
 const morda::real antialiasWidth_c = morda::real(0.55f);
 const morda::real splineControlLength_c = morda::real(100);
 }
 
-WireArea::WireArea(const puu::forest& desc) :
-		widget(desc),
-		SizeContainer(desc)
+WireArea::WireArea(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		size_container(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!morda::is_property(p)){
@@ -30,7 +30,7 @@ WireArea::WireArea(const puu::forest& desc) :
 }
 
 
-void WireArea::render(const morda::Matr4r& matrix) const {
+void WireArea::render(const morda::matrix4& matrix) const {
 	this->container::render(matrix);
 	
 	for(auto& s : this->sockets){
@@ -46,9 +46,9 @@ void WireArea::render(const morda::Matr4r& matrix) const {
 		Path path;
 		path.cubicTo(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);
 		
-		PathVba vba(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
+		PathVba vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
-		vba.render(morda::Matr4r(matrix).translate(p0), this->wireColor);
+		vba.render(morda::matrix4(matrix).translate(p0), this->wireColor);
 	}
 	
 	if(this->grabbedSocket){
@@ -58,13 +58,13 @@ void WireArea::render(const morda::Matr4r& matrix) const {
 		Path path;
 		path.lineTo(mousePos - p0);
 		
-		PathVba vba(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
+		PathVba vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
-		vba.render(morda::Matr4r(matrix).translate(p0), this->grabbedColor);
+		vba.render(morda::matrix4(matrix).translate(p0), this->grabbedColor);
 	}
 }
 
-bool WireArea::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) {
+bool WireArea::on_mouse_move(const morda::vector2& pos, unsigned pointerID) {
 	if(this->grabbedSocket){
 		this->mousePos = pos;
 	}
@@ -73,7 +73,7 @@ bool WireArea::on_mouse_move(const morda::Vec2r& pos, unsigned pointerID) {
 
 
 void WireArea::lay_out() {
-	this->SizeContainer::lay_out();
+	this->size_container::lay_out();
 	
 	this->sockets = this->get_all_widgets<WireSocket>();
 	// TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)

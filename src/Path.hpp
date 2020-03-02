@@ -4,7 +4,7 @@
 #include <morda/config.hpp>
 
 class Path {
-	std::vector<morda::Vec2r> path = {{0}};
+	std::vector<morda::vector2> path = {{0}};
 	
 public:
 	Path() = default;
@@ -12,18 +12,18 @@ public:
 	Path(const Path&) = delete;
 	Path& operator=(const Path&) = delete;
 	
-	void lineTo(morda::Vec2r absPos);
+	void lineTo(morda::vector2 absPos);
 	void lineTo(morda::real x, morda::real y){
-		this->lineTo(morda::Vec2r(x, y));
+		this->lineTo(morda::vector2(x, y));
 	}
 	
-	void cubicTo(morda::Vec2r absP1, morda::Vec2r absP2, morda::Vec2r absP3);
-	void cubicBy(morda::Vec2r relP1, morda::Vec2r relP2, morda::Vec2r relP3);
+	void cubicTo(morda::vector2 absP1, morda::vector2 absP2, morda::vector2 absP3);
+	void cubicBy(morda::vector2 relP1, morda::vector2 relP2, morda::vector2 relP3);
 	
-	void lineBy(morda::Vec2r relPos);
+	void lineBy(morda::vector2 relPos);
 	
 	struct Vertices{
-		std::vector<morda::Vec2r> pos;
+		std::vector<morda::vector2> pos;
 		std::vector<morda::real> alpha;
 		
 		std::vector<std::uint16_t> inIndices;

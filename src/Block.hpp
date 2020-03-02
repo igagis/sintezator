@@ -1,21 +1,21 @@
 #pragma once
 
-#include <morda/widgets/group/Pile.hpp>
+#include <morda/widgets/group/pile.hpp>
 
 class Block : 
-	private morda::Pile,
-	virtual public morda::Widget
+	private morda::pile,
+	virtual public morda::widget
 {
 public:
-	Block(const puu::forest& desc);
+	Block(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 	Block(const Block&) = delete;
 	Block& operator=(const Block&) = delete;
 	
-	morda::Pile& content;
+	morda::pile& content;
 	
 private:
 	bool captured = false;
-	morda::Vec2r capturePoint;
+	morda::vector2 capturePoint;
 	
 };

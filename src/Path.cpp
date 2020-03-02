@@ -2,16 +2,16 @@
 
 #include "Path.hpp"
 
-void Path::lineTo(morda::Vec2r absPos) {
+void Path::lineTo(morda::vector2 absPos) {
 	this->path.emplace_back(absPos);
 }
 
-void Path::lineBy(morda::Vec2r relPos) {
+void Path::lineBy(morda::vector2 relPos) {
 	ASSERT(this->path.size() != 0)
 	this->lineTo(this->path.back() + relPos);
 }
 
-void Path::cubicBy(morda::Vec2r relP1, morda::Vec2r relP2, morda::Vec2r relP3) {
+void Path::cubicBy(morda::vector2 relP1, morda::vector2 relP2, morda::vector2 relP3) {
 	ASSERT(this->path.size() != 0)
 	auto& d = this->path.back();
 	this->cubicTo(d + relP1, d + relP2, d + relP3);
@@ -20,7 +20,7 @@ void Path::cubicBy(morda::Vec2r relP1, morda::Vec2r relP2, morda::Vec2r relP3) {
 
 
 
-void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
+void Path::cubicTo(morda::vector2 p1, morda::vector2 p2, morda::vector2 p3) {
 	auto p0 = this->path.back();
 
 	auto bezier = [p0, p1, p2, p3](morda::real t){
@@ -29,7 +29,7 @@ void Path::cubicTo(morda::Vec2r p1, morda::Vec2r p2, morda::Vec2r p3) {
 		return pow3(1 - t) * p0 + 3 * t * pow2(1 - t) * p1 + 3 * pow2(t) * (1 - t) * p2 + pow3(t) * p3;
 	};
 
-	auto lengthEst = (p1 - p0).magnitude() + (p2 - p1).magnitude() + (p3 - p2).magnitude();
+	auto lengthEst = (p1 - p0).norm() + (p2 - p1).norm() + (p3 - p2).norm();
 
 	const morda::real maxStep_c = 10.0f; //10 pixels
 
@@ -69,7 +69,7 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 			}
 		}
 
-		morda::Vec2r prevNormal, nextNormal;
+		morda::vector2 prevNormal, nextNormal;
 
 		ASSERT(prev || next)
 
@@ -102,10 +102,10 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 
 		if(!prev){
 			ASSERT(next)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotation(-pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rotated(-pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
 		}else if(!next){
 			ASSERT(prev)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotation(pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rotated(pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) - normal * antialiasMiter);
 		}
@@ -123,9 +123,9 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 		++inIndex;
 
 		if(!prev){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotation(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rotated(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
 		}else if(!next){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotation(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rotated(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) + normal * antialiasMiter);
 		}

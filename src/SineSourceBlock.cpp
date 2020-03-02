@@ -3,12 +3,12 @@
 
 namespace{
 const auto layout_c = puu::read(R"qwertyuiop(
-	Column{
-		Text{
+	@column{
+		@text{
 			text{"Sine Wave"}
 		}
-		Right{
-			OutSocket{
+		@right{
+			@OutSocket{
 				id{output}
 				outlet{right}
 				text{output}
@@ -18,9 +18,9 @@ const auto layout_c = puu::read(R"qwertyuiop(
 )qwertyuiop");
 }
 
-SineSourceBlock::SineSourceBlock() :
-		widget(puu::forest()),
-		Block(layout_c),
+SineSourceBlock::SineSourceBlock(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+		widget(std::move(c), desc),
+		Block(this->context, layout_c),
 		source(std::make_shared<SineSource>(440)),
 		sourceVisitor(this->source)
 {

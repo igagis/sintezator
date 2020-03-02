@@ -4,12 +4,12 @@
 
 namespace{
 const auto layout_c = puu::read(R"qwertyuiop(
-	Column{
-		Text{
+	@column{
+		@text{
 			text{Speakers}
 		}
-		Left{
-			InSocket{
+		@left{
+			@InSocket{
 				id{input}
 				outlet{left}
 				text{input}
@@ -20,10 +20,10 @@ const auto layout_c = puu::read(R"qwertyuiop(
 }
 
 
-SpeakersBlock::SpeakersBlock():
-		widget(puu::forest()),
-		Block(layout_c),
-		sink(utki::makeUnique<aumiks::Speakers>(audout::SamplingRate_e::HZ_44100)),
+SpeakersBlock::SpeakersBlock(std::shared_ptr<morda::context> c, const puu::forest& desc):
+		widget(std::move(c), desc),
+		Block(this->context, layout_c),
+		sink(utki::makeUnique<aumiks::Speakers>(audout::rate::hz44100)),
 		inputVisitor(this->sink->input)
 {
 	auto& inputSocket = this->get_widget("input").get_widget_as<Socket>("ws");

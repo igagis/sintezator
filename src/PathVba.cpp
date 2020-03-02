@@ -1,32 +1,32 @@
 #include "PathVba.hpp"
 
-#include <morda/Morda.hpp>
-
 #include "App.hpp"
 
-PathVba::PathVba(const Path::Vertices& path){
-	auto coreBuf = morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(path.pos));
+PathVba::PathVba(std::shared_ptr<morda::renderer> r, const Path::Vertices& path) :
+		renderer(std::move(r))
+{
+	auto coreBuf = this->renderer->factory->create_vertex_buffer(utki::wrapBuf(path.pos));
 	
-	this->core = morda::inst().renderer().factory->createVertexArray(
+	this->core = this->renderer->factory->create_vertex_array(
 			{{
 				coreBuf,
 			}},
-			morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(path.inIndices)),
-			morda::VertexArray::Mode_e::TRIANGLE_STRIP
+			this->renderer->factory->create_index_buffer(utki::wrapBuf(path.inIndices)),
+			morda::vertex_array::mode::triangle_strip
 		);
 	
 	
-	this->border = morda::inst().renderer().factory->createVertexArray(
+	this->border = this->renderer->factory->create_vertex_array(
 			{{
 				coreBuf,
-				morda::inst().renderer().factory->createVertexBuffer(utki::wrapBuf(path.alpha)),
+				this->renderer->factory->create_vertex_buffer(utki::make_span(path.alpha)),
 			}},
-			morda::inst().renderer().factory->createIndexBuffer(utki::wrapBuf(path.outIndices)),
-			morda::VertexArray::Mode_e::TRIANGLE_STRIP
+			this->renderer->factory->create_index_buffer(utki::make_span(path.outIndices)),
+			morda::vertex_array::mode::triangle_strip
 		);
 }
 
-void PathVba::render(const morda::Matr4r& matrix, std::uint32_t color){
-	morda::inst().renderer().shader->colorPos->render(matrix, *this->core, color);
-	morda::inst().renderer().shader->colorPosLum->render(matrix, *this->border, color);
+void PathVba::render(const morda::matrix4& matrix, std::uint32_t color){
+	this->renderer->shader->color_pos->render(matrix, *this->core, color);
+	this->renderer->shader->color_pos_lum->render(matrix, *this->border, color);
 }

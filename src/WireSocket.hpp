@@ -24,7 +24,7 @@ public:
 	WireSocket& operator=(const WireSocket&) = delete;
 
 protected:
-	WireSocket(const puu::forest& desc);
+	WireSocket(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
 	std::shared_ptr<WireSocket> getRemote();
 public:
@@ -45,12 +45,12 @@ public:
 	 * @return Array of two vectors. First is the position of the outlet within the widget.
 	 *         Second is the unit vector of outlet wire direction.
 	 */
-	std::array<morda::Vec2r, 2> outletPos()const noexcept;
+	std::array<morda::vector2, 2> outletPos()const noexcept;
 
 	void connect(const std::shared_ptr<WireSocket>& o = nullptr);
 	void disconnect();
 
-	bool on_mouse_button(bool isDown, const morda::Vec2r& pos, morda::MouseButton_e button, unsigned pointerID) override;
+	bool on_mouse_button(bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerID) override;
 
 	void on_hover_changed(unsigned pointerID) override;
 	
