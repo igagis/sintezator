@@ -21,7 +21,7 @@ else
     this_cxxflags += -O3
 endif
 
-this_ldlibs += -laumiks -lnitki  -lpogodi -laudout -lpulse -lpulse-simple -lmordavokne-opengl2 -lmorda-opengl2-ren -lGLEW -lGL -lstdc++ -lmorda -lpuu -rdynamic -lm
+this_ldlibs += -laumiks -lnitki -lopros -laudout -lpulse -lpulse-simple -lmordavokne-opengl2 -lmorda-opengl2-ren -lGLEW -lGL -lstdc++ -lmorda -lpuu -rdynamic -lm
 
 this_out_dir := build
 

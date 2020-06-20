@@ -23,7 +23,7 @@ const auto layout_c = puu::read(R"qwertyuiop(
 SpeakersBlock::SpeakersBlock(std::shared_ptr<morda::context> c, const puu::forest& desc):
 		widget(std::move(c), desc),
 		Block(this->context, layout_c),
-		sink(utki::makeUnique<aumiks::Speakers>(audout::rate::hz44100)),
+		sink(std::make_unique<aumiks::Speakers>(audout::rate::hz44100)),
 		inputVisitor(this->sink->input)
 {
 	auto& inputSocket = this->get_widget("input").get_widget_as<Socket>("ws");
