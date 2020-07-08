@@ -112,7 +112,7 @@ bool WireSocket::on_mouse_button(const morda::mouse_button_event& e) {
 	return false;
 }
 
-void WireSocket::on_hover_changed(unsigned pointerID) {
+void WireSocket::on_hover_change(unsigned pointerID) {
 //	TRACE(<< "Hover changed: " << this->isHovered() << " " << this << std::endl)
 	if(auto wa = this->find_ancestor<WireArea>()){
 		if(this->is_hovered()){

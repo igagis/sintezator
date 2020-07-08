@@ -52,7 +52,7 @@ public:
 
 	bool on_mouse_button(const morda::mouse_button_event& event)override;
 
-	void on_hover_changed(unsigned pointerID) override;
+	void on_hover_change(unsigned pointerID) override;
 	
 	/**
 	 * @brief Connection event callback.
