@@ -28,27 +28,27 @@ Block::Block(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		morda::pile(this->context, blockLayout_c),
 		content(this->get_widget_as<morda::nine_patch>("ninePatch").content())
 {
-	this->content.inflate_push_back(desc);
+	this->content.push_back_inflate(desc);
 	
 	auto& mp = this->get_widget_as<morda::mouse_proxy>("mouseProxy");
 	
-	mp.mouse_button_handler = [this](widget& widget, bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerId){
-		if(button != morda::mouse_button::left){
+	mp.mouse_button_handler = [this](morda::mouse_proxy& widget, const morda::mouse_button_event& e){
+		if(e.button != morda::mouse_button::left){
 			return false;
 		}
 
-		if(isDown){
+		if(e.is_down){
 			this->captured = true;
-			this->capturePoint = pos;
+			this->capturePoint = e.pos;
 			return true;
 		}
 		this->captured = false;
 		return false;
 	};
 	
-	mp.mouse_move_handler = [this](widget& widget, const morda::vector2& pos, unsigned pointerId){
+	mp.mouse_move_handler = [this](morda::mouse_proxy& w, const morda::mouse_move_event& e){
 		if(this->captured){
-			this->move_by(pos - this->capturePoint);
+			this->move_by(e.pos - this->capturePoint);
 			return true;
 		}
 		return false;

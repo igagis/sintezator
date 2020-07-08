@@ -64,13 +64,12 @@ void WireArea::render(const morda::matrix4& matrix) const {
 	}
 }
 
-bool WireArea::on_mouse_move(const morda::vector2& pos, unsigned pointerID) {
+bool WireArea::on_mouse_move(const morda::mouse_move_event& e) {
 	if(this->grabbedSocket){
-		this->mousePos = pos;
+		this->mousePos = e.pos;
 	}
-	return this->container::on_mouse_move(pos, pointerID);;
+	return this->container::on_mouse_move(e);
 }
-
 
 void WireArea::lay_out() {
 	this->size_container::lay_out();

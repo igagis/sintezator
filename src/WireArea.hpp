@@ -20,11 +20,11 @@ public:
 	
 	WireArea(std::shared_ptr<morda::context> c, const puu::forest& desc);
 	
-	void render(const morda::matrix4& matrix) const override;
+	void render(const morda::matrix4& matrix)const override;
 
 	void lay_out() override;
 	
-	bool on_mouse_move(const morda::vector2& pos, unsigned pointerID) override;
+	bool on_mouse_move(const morda::mouse_move_event& e)override;
 
 private:
 	morda::vector2 mousePos;

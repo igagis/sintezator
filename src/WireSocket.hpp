@@ -50,7 +50,7 @@ public:
 	void connect(const std::shared_ptr<WireSocket>& o = nullptr);
 	void disconnect();
 
-	bool on_mouse_button(bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerID) override;
+	bool on_mouse_button(const morda::mouse_button_event& event)override;
 
 	void on_hover_changed(unsigned pointerID) override;
 	

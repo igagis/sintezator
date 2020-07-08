@@ -38,7 +38,7 @@ void WireSocket::connect(const std::shared_ptr<WireSocket>& o) {
 	o->disconnect();
 	
 	this->slave = o;
-	this->slave->primary = this->sharedFromThis(this);
+	this->slave->primary = utki::make_shared_from_this(*this);
 	this->onConnected(*this->slave);
 }
 
@@ -86,23 +86,23 @@ std::array<morda::vector2, 2> WireSocket::outletPos() const noexcept{
 	return {{pos, dir}};
 }
 
-bool WireSocket::on_mouse_button(bool isDown, const morda::vector2& pos, morda::mouse_button button, unsigned pointerID) {
-	if(button != morda::mouse_button::left){
+bool WireSocket::on_mouse_button(const morda::mouse_button_event& e) {
+	if(e.button != morda::mouse_button::left){
 		return false;
 	}
 	
 	if(auto wa = this->find_ancestor<WireArea>()){
-		if(isDown){
+		if(e.is_down){
 			std::shared_ptr<WireSocket> grabbedSocket;
 			if(auto p = this->getRemote()){
 				p->disconnect();
 				grabbedSocket = std::move(p);
 			}else{
-				grabbedSocket = this->sharedFromThis(this);
+				grabbedSocket = utki::make_shared_from_this(*this);
 			}
 			
 			wa->grabbedSocket = std::move(grabbedSocket);
-			wa->mousePos = this->pos_in_ancestor(pos, wa);
+			wa->mousePos = this->pos_in_ancestor(e.pos, wa);
 		}else{
 			wa->grabbedSocket->connect(wa->hoveredSocket);
 			wa->grabbedSocket.reset();
@@ -116,7 +116,7 @@ void WireSocket::on_hover_changed(unsigned pointerID) {
 //	TRACE(<< "Hover changed: " << this->isHovered() << " " << this << std::endl)
 	if(auto wa = this->find_ancestor<WireArea>()){
 		if(this->is_hovered()){
-			wa->hoveredSocket = this->sharedFromThis(this);
+			wa->hoveredSocket = utki::make_shared_from_this(*this);
 		}else{
 			if(wa->hoveredSocket.get() == this){
 				wa->hoveredSocket.reset();
