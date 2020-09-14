@@ -69,19 +69,19 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 			}
 		}
 
-		morda::vector2 prevNormal, nextNormal;
+		morda::vector2 prevNormal{0}, nextNormal;
 
 		ASSERT(prev || next)
 
 		if(prev){
 			prevNormal = (*cur - *prev).normalize();
-			std::swap(prevNormal.x, prevNormal.y);
-			prevNormal.x = -prevNormal.x;
+			std::swap(prevNormal.x(), prevNormal.y());
+			prevNormal.x() = -prevNormal.x();
 		}
 		if(next){
 			nextNormal = (*next - *cur).normalize();
-			std::swap(nextNormal.x, nextNormal.y);
-			nextNormal.x = -nextNormal.x;
+			std::swap(nextNormal.x(), nextNormal.y());
+			nextNormal.x() = -nextNormal.x();
 		}else{
 			ASSERT(prev)
 			nextNormal = prevNormal;
@@ -102,10 +102,10 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 
 		if(!prev){
 			ASSERT(next)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotated(-pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rot(-pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
 		}else if(!next){
 			ASSERT(prev)
-			ret.pos.push_back((*cur) - normal * miter - normal.rotated(pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
+			ret.pos.push_back((*cur) - normal * miter - normal.rot(pi<morda::real>() / 4) * antialiasWidth * sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) - normal * antialiasMiter);
 		}
@@ -123,9 +123,9 @@ Path::Vertices Path::stroke(morda::real halfWidth, morda::real antialiasWidth, m
 		++inIndex;
 
 		if(!prev){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotated(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rot(utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
 		}else if(!next){
-			ret.pos.push_back((*cur) + normal * miter + normal.rotated(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
+			ret.pos.push_back((*cur) + normal * miter + normal.rot(-utki::pi<morda::real>() / 4) * antialiasWidth * std::sqrt(2));
 		}else{
 			ret.pos.push_back((*cur) + normal * antialiasMiter);
 		}

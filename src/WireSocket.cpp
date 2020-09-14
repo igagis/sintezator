@@ -67,19 +67,19 @@ std::array<morda::vector2, 2> WireSocket::outletPos() const noexcept{
 		default:
 			ASSERT(false)
 		case Outlet_e::BOTTOM:
-			pos = this->rect().p + this->rect().d.comp_multiplied(morda::vector2(0.5, 1));
+			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0.5, 1));
 			dir = morda::vector2(0, 1);
 			break;
 		case Outlet_e::LEFT:
-			pos = this->rect().p + this->rect().d.comp_multiplied(morda::vector2(0, 0.5));
+			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0, 0.5));
 			dir = morda::vector2(-1, 0);
 			break;
 		case Outlet_e::RIGHT:
-			pos = this->rect().p + this->rect().d.comp_multiplied(morda::vector2(1, 0.5));
+			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(1, 0.5));
 			dir = morda::vector2(1, 0);
 			break;
 		case Outlet_e::TOP:
-			pos = this->rect().p + this->rect().d.comp_multiplied(morda::vector2(0.5, 0));
+			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0.5, 0));
 			dir = morda::vector2(0, -1);
 			break;
 	}
