@@ -7,7 +7,7 @@
 
 App::App() :
 		mordavokne::application("sintezator", [](){
-			return mordavokne::window_params(r4::vec2ui(320, 480));
+			return mordavokne::window_params(r4::vector2<unsigned>(320, 480));
 		}())
 {
 	this->gui.initStandardWidgets(*this->get_res_file());

@@ -7,7 +7,8 @@
 			"label": "clean",
 			"type": "shell",
 			"command": "make clean",
-			"problemMatcher": []
+			"problemMatcher": [],
+			"group": "build"
 		},
 		{
 			"label": "build",
@@ -15,7 +16,8 @@
 			"command": "make autojobs=true",
 			"problemMatcher": [
 				"$gcc"
-			]
+			],
+			"group": "build"
 		},
 		{
 			"label": "build_debug",
@@ -23,21 +25,24 @@
 			"command": "make autojobs=true debug=true",
 			"problemMatcher": [
 				"$gcc"
-			]
+			],
+			"group": "build"
 		},
 		{
 			"label": "run",
 			"type": "shell",
 			"command": "./build/sintezator",
 			"dependsOn": "build",
-			"problemMatcher": []
+			"problemMatcher": [],
+			"group": "build"
 		},
 		{
 			"label": "run_debug",
 			"type": "shell",
 			"command": "./build/sintezator",
 			"dependsOn": "build_debug",
-			"problemMatcher": []
+			"problemMatcher": [],
+			"group": "build"
 		}
 	]
 }

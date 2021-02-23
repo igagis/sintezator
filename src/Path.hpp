@@ -4,7 +4,7 @@
 #include <morda/config.hpp>
 
 class Path {
-	std::vector<morda::vector2> path = {{0}};
+	std::vector<morda::vector2> path = {{0, 0}};
 	
 public:
 	Path() = default;
