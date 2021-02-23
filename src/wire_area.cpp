@@ -1,4 +1,4 @@
-#include "WireArea.hpp"
+#include "wire_area.hpp"
 
 #include <morda/paint/path_vao.hpp>
 

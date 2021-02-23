@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WireSocket.hpp"
+#include "wire_socket.hpp"
 
 #include "SocketVisitor.hpp"
 

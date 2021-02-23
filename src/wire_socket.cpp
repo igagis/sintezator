@@ -1,6 +1,6 @@
-#include "WireSocket.hpp"
+#include "wire_socket.hpp"
 
-#include "WireArea.hpp"
+#include "wire_area.hpp"
 
 #include <morda/util/util.hpp>
 

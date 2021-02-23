@@ -2,7 +2,7 @@
 
 #include <morda/widgets/group/size_container.hpp>
 
-#include "WireSocket.hpp"
+#include "wire_socket.hpp"
 
 class WireArea : public morda::size_container{
 	friend class WireSocket;
