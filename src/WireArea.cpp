@@ -1,6 +1,6 @@
 #include "WireArea.hpp"
-#include "Path.hpp"
-#include "PathVba.hpp"
+
+#include <morda/paint/path_vao.hpp>
 
 #include <morda/context.hpp>
 #include <morda/util/util.hpp>
@@ -43,10 +43,10 @@ void WireArea::render(const morda::matrix4& matrix) const {
 		auto p0 = s->pos_in_ancestor(primOutletPos[0], this);
 		auto p = s->slave->pos_in_ancestor(slaveOutletPos[0], this) - p0;
 		
-		Path path;
-		path.cubicTo(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);
+		morda::path path;
+		path.cubic_to(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);
 		
-		PathVba vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
+		morda::path_vao vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
 		vba.render(morda::matrix4(matrix).translate(p0), this->wireColor);
 	}
@@ -55,10 +55,10 @@ void WireArea::render(const morda::matrix4& matrix) const {
 		auto outletPos = this->grabbedSocket->outletPos();
 		auto p0 = this->grabbedSocket->pos_in_ancestor(outletPos[0], this);
 		
-		Path path;
-		path.lineTo(mousePos - p0);
+		morda::path path;
+		path.line_to(mousePos - p0);
 		
-		PathVba vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
+		morda::path_vao vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
 		vba.render(morda::matrix4(matrix).translate(p0), this->grabbedColor);
 	}
