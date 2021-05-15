@@ -24,7 +24,7 @@ public:
 	WireSocket& operator=(const WireSocket&) = delete;
 
 protected:
-	WireSocket(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	WireSocket(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	std::shared_ptr<WireSocket> getRemote();
 public:

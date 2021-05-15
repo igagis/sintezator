@@ -22,7 +22,7 @@
 		{
 			"label": "build_debug",
 			"type": "shell",
-			"command": "make autojobs=true debug=true",
+			"command": "make autojobs=true config=dbg",
 			"problemMatcher": [
 				"$gcc"
 			],
@@ -31,7 +31,7 @@
 		{
 			"label": "run",
 			"type": "shell",
-			"command": "./build/sintezator",
+			"command": "./out/rel/sintezator",
 			"dependsOn": "build",
 			"problemMatcher": [],
 			"group": "build"
@@ -39,7 +39,7 @@
 		{
 			"label": "run_debug",
 			"type": "shell",
-			"command": "./build/sintezator",
+			"command": "./out/dbg/sintezator",
 			"dependsOn": "build_debug",
 			"problemMatcher": [],
 			"group": "build"

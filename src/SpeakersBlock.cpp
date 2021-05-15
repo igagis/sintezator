@@ -3,7 +3,7 @@
 #include "Socket.hpp"
 
 namespace{
-const auto layout_c = puu::read(R"qwertyuiop(
+const auto layout_c = treeml::read(R"qwertyuiop(
 	@column{
 		@text{
 			text{Speakers}
@@ -20,7 +20,7 @@ const auto layout_c = puu::read(R"qwertyuiop(
 }
 
 
-SpeakersBlock::SpeakersBlock(std::shared_ptr<morda::context> c, const puu::forest& desc):
+SpeakersBlock::SpeakersBlock(std::shared_ptr<morda::context> c, const treeml::forest& desc):
 		widget(std::move(c), desc),
 		Block(this->context, layout_c),
 		sink(std::make_unique<aumiks::Speakers>(audout::rate::hz44100)),

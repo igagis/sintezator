@@ -24,8 +24,8 @@ App::App() :
 
 	{
 		auto& wa = c->get_widget_as<WireArea>("wireArea");
-		wa.push_back(std::make_shared<SpeakersBlock>(this->gui.context, puu::forest()));
-		wa.push_back(std::make_shared<SineSourceBlock>(this->gui.context, puu::forest()));
+		wa.push_back(std::make_shared<SpeakersBlock>(this->gui.context, treeml::forest()));
+		wa.push_back(std::make_shared<SineSourceBlock>(this->gui.context, treeml::forest()));
 
 		auto in11 = c->try_get_widget("in11")->try_get_widget_as<WireSocket>("ws");
 		ASSERT(in11)

@@ -18,7 +18,7 @@ public:
 	WireArea(const WireArea&) = delete;
 	WireArea& operator=(const WireArea&) = delete;
 	
-	WireArea(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	WireArea(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	void render(const morda::matrix4& matrix)const override;
 
