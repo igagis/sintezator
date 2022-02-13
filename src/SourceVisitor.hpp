@@ -2,13 +2,13 @@
 
 #include "SocketVisitor.hpp"
 
-#include <aumiks/Source.hpp>
+#include <aumiks/source.hpp>
 
 class SourceVisitor : public SocketVisitor{
 public:
-	std::shared_ptr<aumiks::Source> source;
+	std::shared_ptr<aumiks::source> source;
 	
-	SourceVisitor(std::shared_ptr<aumiks::Source> source);
+	SourceVisitor(std::shared_ptr<aumiks::source> source);
 	
 	SourceVisitor(const SourceVisitor&) = delete;
 	SourceVisitor& operator=(const SourceVisitor&) = delete;

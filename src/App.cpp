@@ -4,7 +4,6 @@
 #include "Socket.hpp"
 #include "SineSourceBlock.hpp"
 
-
 App::App() :
 		mordavokne::application("sintezator", [](){
 			return mordavokne::window_params(r4::vector2<unsigned>(320, 480));

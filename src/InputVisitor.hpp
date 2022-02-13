@@ -1,15 +1,15 @@
 #pragma once
 
-#include <aumiks/Input.hpp>
+#include <aumiks/input.hpp>
 
 #include "SocketVisitor.hpp"
 
 
 class InputVisitor : public SocketVisitor{
 public:
-	aumiks::Input& input;
+	aumiks::input& input;
 	
-	InputVisitor(aumiks::Input& input);
+	InputVisitor(aumiks::input& input);
 	
 	InputVisitor(const InputVisitor&) = delete;
 	InputVisitor& operator=(const InputVisitor&) = delete;

@@ -3,10 +3,10 @@
 #include "Block.hpp"
 #include "InputVisitor.hpp"
 
-#include <aumiks/Speakers.hpp>
+#include <aumiks/speakers.hpp>
 
 class SpeakersBlock : public Block{
-	std::unique_ptr<aumiks::Sink> sink;
+	std::unique_ptr<aumiks::sink> sink;
 	InputVisitor inputVisitor;
 public:
 	SpeakersBlock(std::shared_ptr<morda::context> c, const treeml::forest& desc);

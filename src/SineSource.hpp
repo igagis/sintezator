@@ -1,13 +1,13 @@
 #pragma once
 
-#include <aumiks/Source.hpp>
+#include <aumiks/source.hpp>
 
-class SineSource : public aumiks::Source{
+class SineSource : public aumiks::source{
 	float t = 0;
 	
 	float freq;
 public:
 	SineSource(float freq);
 	
-	bool fillSampleBuffer(utki::span<aumiks::Frame> buf)noexcept override;
+	bool fill_sample_buffer(utki::span<aumiks::frame> buf)noexcept override;
 };

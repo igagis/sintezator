@@ -23,7 +23,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 SpeakersBlock::SpeakersBlock(std::shared_ptr<morda::context> c, const treeml::forest& desc):
 		widget(std::move(c), desc),
 		Block(this->context, layout_c),
-		sink(std::make_unique<aumiks::Speakers>(audout::rate::hz44100)),
+		sink(std::make_unique<aumiks::speakers>(audout::rate::hz_44100)),
 		inputVisitor(this->sink->input)
 {
 	auto& inputSocket = this->get_widget("input").get_widget_as<Socket>("ws");

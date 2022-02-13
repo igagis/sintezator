@@ -1,7 +1,7 @@
 #include "SourceVisitor.hpp"
 #include "InputVisitor.hpp"
 
-SourceVisitor::SourceVisitor(std::shared_ptr<aumiks::Source> source) :
+SourceVisitor::SourceVisitor(std::shared_ptr<aumiks::source> source) :
 		source(std::move(source))
 {
 }

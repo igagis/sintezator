@@ -2,7 +2,7 @@
 #include "SourceVisitor.hpp"
 
 
-InputVisitor::InputVisitor(aumiks::Input& input) :
+InputVisitor::InputVisitor(aumiks::input& input) :
 		input(input)
 {
 }
