@@ -1,33 +1,3 @@
-defs{
-	@InSocket{ text outlet
-		@pile{
-			@text{
-				text{${text}}
-				color{0xff0000ff}
-			}
-			@Socket{
-				id{ws}
-				outlet{${outlet}}
-				layout{dx{fill} dy{fill}}
-			}
-		}
-	}
-
-	@OutSocket{ text outlet
-		@pile{
-			@text{
-				text{${text}}
-				color{0xff00ff00}
-			}
-			@Socket{
-				id{ws}
-				outlet{${outlet}}
-				layout{dx{fill} dy{fill}}
-			}
-		}
-	}
-}
-
 @WiredArea{
 	id{wireArea}
 

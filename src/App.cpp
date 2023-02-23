@@ -13,25 +13,57 @@ App::App() :
 
 	//		morda::inst().resMan.mountResPack(*this->getResFile("res/"));
 
-	this->gui.context->inflater.register_widget<Block>("Block");
-	this->gui.context->inflater.register_widget<WireArea>("WiredArea");
-	this->gui.context->inflater.register_widget<Socket>("Socket");
+	this->gui.context.get().inflater.push_defs(R"(
+		defs{
+		@InSocket{ text outlet
+			@pile{
+				@text{
+					text{${text}}
+					color{0xff0000ff}
+				}
+				@Socket{
+					id{ws}
+					outlet{${outlet}}
+					layout{dx{fill} dy{fill}}
+				}
+			}
+		}
 
-	auto c = this->gui.context->inflater.inflate(
+		@OutSocket{ text outlet
+			@pile{
+				@text{
+					text{${text}}
+					color{0xff00ff00}
+				}
+				@Socket{
+					id{ws}
+					outlet{${outlet}}
+					layout{dx{fill} dy{fill}}
+				}
+			}
+		}
+	}
+	)");
+
+	this->gui.context.get().inflater.register_widget<Block>("Block");
+	this->gui.context.get().inflater.register_widget<WireArea>("WiredArea");
+	this->gui.context.get().inflater.register_widget<Socket>("Socket");
+
+	auto c = this->gui.context.get().inflater.inflate(
 			*this->get_res_file("res/main.gui")
 		);
 
 	{
-		auto& wa = c->get_widget_as<WireArea>("wireArea");
-		wa.push_back(std::make_shared<SpeakersBlock>(this->gui.context, treeml::forest()));
-		wa.push_back(std::make_shared<SineSourceBlock>(this->gui.context, treeml::forest()));
+		auto& wa = c.get().get_widget_as<WireArea>("wireArea");
+		wa.push_back(utki::make_shared<SpeakersBlock>(this->gui.context, treeml::forest()));
+		wa.push_back(utki::make_shared<SineSourceBlock>(this->gui.context, treeml::forest()));
 
-		auto in11 = c->try_get_widget("in11")->try_get_widget_as<WireSocket>("ws");
+		auto in11 = c.get().try_get_widget("in11")->try_get_widget_as<WireSocket>("ws");
 		ASSERT(in11)
-		auto in12 = c->try_get_widget("in12")->try_get_widget_as<WireSocket>("ws");
+		auto in12 = c.get().try_get_widget("in12")->try_get_widget_as<WireSocket>("ws");
 		ASSERT(in12)
 		in11->connect(in12);
 	}
 
-	this->gui.set_root(std::move(c));
+	this->gui.set_root(c.to_shared_ptr());
 }

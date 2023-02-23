@@ -18,7 +18,7 @@ public:
 	WireArea(const WireArea&) = delete;
 	WireArea& operator=(const WireArea&) = delete;
 	
-	WireArea(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	WireArea(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	void render(const morda::matrix4& matrix)const override;
 
@@ -32,7 +32,7 @@ private:
 	std::shared_ptr<WireSocket> grabbedSocket;
 	std::shared_ptr<WireSocket> hoveredSocket;
 	
-	std::vector<std::shared_ptr<WireSocket>> sockets;
+	std::vector<utki::shared_ref<WireSocket>> sockets;
 
 };
 

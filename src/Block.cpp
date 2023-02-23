@@ -23,7 +23,7 @@ const auto blockLayout_c = treeml::read(R"qwertyuiop(
 }
 
 
-Block::Block(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
+Block::Block(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		morda::widget(std::move(c), desc),
 		morda::pile(this->context, blockLayout_c),
 		content(this->get_widget_as<morda::nine_patch>("ninePatch").content())

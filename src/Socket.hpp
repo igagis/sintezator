@@ -6,7 +6,7 @@
 
 class Socket : public WireSocket{
 public:
-	Socket(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	Socket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	Socket(const Socket&) = delete;
 	Socket& operator=(const Socket&) = delete;

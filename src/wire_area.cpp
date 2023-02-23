@@ -10,7 +10,7 @@ const morda::real antialiasWidth_c = morda::real(0.55f);
 const morda::real splineControlLength_c = morda::real(100);
 }
 
-WireArea::WireArea(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
+WireArea::WireArea(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		size_container(this->context, desc)
 {
@@ -34,19 +34,20 @@ void WireArea::render(const morda::matrix4& matrix) const {
 	this->container::render(matrix);
 	
 	for(auto& s : this->sockets){
-		if(!s->slave){
+		if(!s.get().slave){
 			continue;
 		}
 		
-		auto primOutletPos = s->outletPos();
-		auto slaveOutletPos = s->slave->outletPos();
-		auto p0 = s->pos_in_ancestor(primOutletPos[0], this);
-		auto p = s->slave->pos_in_ancestor(slaveOutletPos[0], this) - p0;
+		auto primOutletPos = s.get().outletPos();
+		auto slaveOutletPos = s.get().slave->outletPos();
+		auto p0 = s.get().pos_in_ancestor(primOutletPos[0], this);
+		auto p = s.get().slave->pos_in_ancestor(slaveOutletPos[0], this) - p0;
 		
 		morda::path path;
 		path.cubic_to(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);
 		
-		morda::path_vao vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
+		morda::path_vao vba(this->context.get().renderer);
+		vba.set(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
 		vba.render(morda::matrix4(matrix).translate(p0), this->wireColor);
 	}
@@ -58,7 +59,8 @@ void WireArea::render(const morda::matrix4& matrix) const {
 		morda::path path;
 		path.line_to(mousePos - p0);
 		
-		morda::path_vao vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
+		morda::path_vao vba(this->context.get().renderer);
+		vba.set(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
 		vba.render(morda::matrix4(matrix).translate(p0), this->grabbedColor);
 	}

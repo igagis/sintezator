@@ -7,7 +7,7 @@
 
 class SineSourceBlock : public Block{
 public:
-	SineSourceBlock(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	SineSourceBlock(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	SineSourceBlock(const SineSourceBlock&) = delete;
 	SineSourceBlock& operator=(const SineSourceBlock&) = delete;

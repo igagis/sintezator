@@ -1,7 +1,7 @@
 #include "Socket.hpp"
 
 
-Socket::Socket(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
+Socket::Socket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		morda::widget(std::move(c), desc),
 		WireSocket(this->context, desc)
 {

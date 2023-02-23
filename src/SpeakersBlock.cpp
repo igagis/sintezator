@@ -20,7 +20,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 }
 
 
-SpeakersBlock::SpeakersBlock(std::shared_ptr<morda::context> c, const treeml::forest& desc):
+SpeakersBlock::SpeakersBlock(const utki::shared_ref<morda::context>& c, const treeml::forest& desc):
 		widget(std::move(c), desc),
 		Block(this->context, layout_c),
 		sink(std::make_unique<aumiks::speakers>(audout::rate::hz_44100)),

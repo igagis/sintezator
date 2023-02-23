@@ -7,7 +7,7 @@ class Block :
 	virtual public morda::widget
 {
 public:
-	Block(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	Block(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	Block(const Block&) = delete;
 	Block& operator=(const Block&) = delete;

@@ -18,7 +18,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 )qwertyuiop");
 }
 
-SineSourceBlock::SineSourceBlock(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
+SineSourceBlock::SineSourceBlock(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		Block(this->context, layout_c),
 		source(std::make_shared<SineSource>(440)),

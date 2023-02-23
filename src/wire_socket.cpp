@@ -4,7 +4,7 @@
 
 #include <morda/util/util.hpp>
 
-WireSocket::WireSocket(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
+WireSocket::WireSocket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		morda::widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
@@ -38,7 +38,7 @@ void WireSocket::connect(const std::shared_ptr<WireSocket>& o) {
 	o->disconnect();
 	
 	this->slave = o;
-	this->slave->primary = utki::make_shared_from(*this);
+	this->slave->primary = utki::make_shared_from(*this).to_shared_ptr();
 	this->onConnected(*this->slave);
 }
 
@@ -98,7 +98,7 @@ bool WireSocket::on_mouse_button(const morda::mouse_button_event& e) {
 				p->disconnect();
 				grabbedSocket = std::move(p);
 			}else{
-				grabbedSocket = utki::make_shared_from(*this);
+				grabbedSocket = utki::make_shared_from(*this).to_shared_ptr();
 			}
 			
 			wa->grabbedSocket = std::move(grabbedSocket);
@@ -113,10 +113,10 @@ bool WireSocket::on_mouse_button(const morda::mouse_button_event& e) {
 }
 
 void WireSocket::on_hover_change(unsigned pointerID) {
-	TRACE(<< "Hover changed: " << this->is_hovered() << " " << this << std::endl)
+	// TRACE(<< "Hover changed: " << this->is_hovered() << " " << this << std::endl)
 	if(auto wa = this->try_get_ancestor<WireArea>()){
 		if(this->is_hovered()){
-			wa->hoveredSocket = utki::make_shared_from(*this);
+			wa->hoveredSocket = utki::make_shared_from(*this).to_shared_ptr();
 		}else{
 			if(wa->hoveredSocket.get() == this){
 				wa->hoveredSocket.reset();
