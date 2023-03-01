@@ -65,5 +65,5 @@ App::App() :
 		in11->connect(in12);
 	}
 
-	this->gui.set_root(c.to_shared_ptr());
+	this->gui.set_root(c);
 }
