@@ -1,9 +1,9 @@
 #pragma once
 
-#include <morda/widgets/group/pile.hpp>
+#include <morda/container.hpp>
 
 class Block : 
-	private morda::pile,
+	private morda::container,
 	virtual public morda::widget
 {
 public:
@@ -12,7 +12,7 @@ public:
 	Block(const Block&) = delete;
 	Block& operator=(const Block&) = delete;
 	
-	morda::pile& content;
+	morda::container& content;
 	
 private:
 	bool captured = false;

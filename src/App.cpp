@@ -24,7 +24,7 @@ App::App() :
 				@Socket{
 					id{ws}
 					outlet{${outlet}}
-					layout{dx{fill} dy{fill}}
+					lp{dx{fill} dy{fill}}
 				}
 			}
 		}
@@ -38,7 +38,7 @@ App::App() :
 				@Socket{
 					id{ws}
 					outlet{${outlet}}
-					layout{dx{fill} dy{fill}}
+					lp{dx{fill} dy{fill}}
 				}
 			}
 		}

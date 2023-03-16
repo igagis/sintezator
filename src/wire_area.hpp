@@ -1,10 +1,8 @@
 #pragma once
 
-#include <morda/widgets/group/size_container.hpp>
-
 #include "wire_socket.hpp"
 
-class WireArea : public morda::size_container{
+class WireArea : public morda::container{
 	friend class WireSocket;
 	
 	const morda::real deafultWireHalfWidth_c = morda::real(0.25f);
@@ -22,7 +20,7 @@ public:
 	
 	void render(const morda::matrix4& matrix)const override;
 
-	void lay_out() override;
+	void on_lay_out() override;
 	
 	bool on_mouse_move(const morda::mouse_move_event& e)override;
 

@@ -5,9 +5,10 @@
 
 namespace{
 const auto blockLayout_c = treeml::read(R"qwertyuiop(
+	layout{pile}
 	@mouse_proxy{
 		id{mouseProxy}
-		layout{dx{fill} dy{fill}}
+		lp{dx{fill} dy{fill}}
 	}
 	@nine_patch{
 		id{ninePatch}
@@ -25,7 +26,7 @@ const auto blockLayout_c = treeml::read(R"qwertyuiop(
 
 Block::Block(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		morda::widget(std::move(c), desc),
-		morda::pile(this->context, blockLayout_c),
+		morda::container(this->context, blockLayout_c),
 		content(this->get_widget_as<morda::nine_patch>("ninePatch").content())
 {
 	this->content.push_back_inflate(desc);
