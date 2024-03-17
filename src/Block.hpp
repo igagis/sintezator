@@ -1,21 +1,21 @@
 #pragma once
 
-#include <morda/container.hpp>
+#include <ruis/widgets/container.hpp>
 
 class Block : 
-	private morda::container,
-	virtual public morda::widget
+	private ruis::container,
+	virtual public ruis::widget
 {
 public:
-	Block(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	Block(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 	
 	Block(const Block&) = delete;
 	Block& operator=(const Block&) = delete;
 	
-	morda::container& content;
+	ruis::container& content;
 	
 private:
 	bool captured = false;
-	morda::vector2 capturePoint;
+	ruis::vector2 capturePoint;
 	
 };

@@ -5,13 +5,13 @@
 #include "SineSourceBlock.hpp"
 
 App::App() :
-		mordavokne::application("sintezator", [](){
-			return mordavokne::window_params(r4::vector2<unsigned>(320, 480));
+		ruisapp::application("sintezator", [](){
+			return ruisapp::window_params(r4::vector2<unsigned>(320, 480));
 		}())
 {
-	this->gui.initStandardWidgets(*this->get_res_file());
+	this->gui.init_standard_widgets(*this->get_res_file());
 
-	//		morda::inst().resMan.mountResPack(*this->getResFile("res/"));
+	//		ruis::inst().resMan.mountResPack(*this->getResFile("res/"));
 
 	this->gui.context.get().inflater.push_defs(R"(
 		defs{
@@ -55,8 +55,8 @@ App::App() :
 
 	{
 		auto& wa = c.get().get_widget_as<WireArea>("wireArea");
-		wa.push_back(utki::make_shared<SpeakersBlock>(this->gui.context, treeml::forest()));
-		wa.push_back(utki::make_shared<SineSourceBlock>(this->gui.context, treeml::forest()));
+		wa.push_back(utki::make_shared<SpeakersBlock>(this->gui.context, tml::forest()));
+		wa.push_back(utki::make_shared<SineSourceBlock>(this->gui.context, tml::forest()));
 
 		auto in11 = c.get().try_get_widget("in11")->try_get_widget_as<WireSocket>("ws");
 		ASSERT(in11)

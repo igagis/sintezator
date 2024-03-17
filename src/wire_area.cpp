@@ -1,38 +1,38 @@
 #include "wire_area.hpp"
 
-#include <morda/paint/path_vao.hpp>
+#include <ruis/paint/path_vao.hpp>
 
-#include <morda/context.hpp>
-#include <morda/util/util.hpp>
+#include <ruis/context.hpp>
+#include <ruis/util/util.hpp>
 
-#include <morda/layouts/size_layout.hpp>
+#include <ruis/layouts/layout.hpp>
 
 namespace{
-const morda::real antialiasWidth_c = morda::real(0.55f);
-const morda::real splineControlLength_c = morda::real(100);
+const ruis::real antialiasWidth_c = ruis::real(0.55f);
+const ruis::real splineControlLength_c = ruis::real(100);
 }
 
-WireArea::WireArea(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+WireArea::WireArea(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(std::move(c), desc),
-		container(this->context, desc, morda::size_layout::instance)
+		container(this->context, desc, ruis::layout::size)
 {
 	for(const auto& p : desc){
-		if(!morda::is_property(p)){
+		if(!ruis::is_property(p)){
 			continue;
 		}
 
 		if(p.value == "wireWidth"){
-			this->wireHalfWidth = morda::get_property_value(p).to_float() / 2;
+			this->wireHalfWidth = ruis::get_property_value(p).to_float() / 2;
 		}else if(p.value == "wireColor"){
-			this->wireColor = morda::get_property_value(p).to_uint32();
+			this->wireColor = ruis::get_property_value(p).to_uint32();
 		}else if(p.value == "grabbedColor"){
-			this->grabbedColor = morda::get_property_value(p).to_uint32();
+			this->grabbedColor = ruis::get_property_value(p).to_uint32();
 		}
 	}
 }
 
 
-void WireArea::render(const morda::matrix4& matrix) const {
+void WireArea::render(const ruis::matrix4& matrix) const {
 	this->container::render(matrix);
 	
 	for(auto& s : this->sockets){
@@ -45,34 +45,34 @@ void WireArea::render(const morda::matrix4& matrix) const {
 		auto p0 = s.get().pos_in_ancestor(primOutletPos[0], this);
 		auto p = s.get().slave->pos_in_ancestor(slaveOutletPos[0], this) - p0;
 		
-		morda::path path;
+		ruis::path path;
 		path.cubic_to(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);
 		
-		morda::path_vao vba(this->context.get().renderer);
+		ruis::path_vao vba(this->context.get().renderer);
 		vba.set(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
-		vba.render(morda::matrix4(matrix).translate(p0), this->wireColor);
+		vba.render(ruis::matrix4(matrix).translate(p0), this->wireColor);
 	}
 	
 	if(this->grabbedSocket){
 		auto outletPos = this->grabbedSocket->outletPos();
 		auto p0 = this->grabbedSocket->pos_in_ancestor(outletPos[0], this);
 		
-		morda::path path;
+		ruis::path path;
 		path.line_to(mousePos - p0);
 		
-		morda::path_vao vba(this->context.get().renderer);
+		ruis::path_vao vba(this->context.get().renderer);
 		vba.set(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
-		vba.render(morda::matrix4(matrix).translate(p0), this->grabbedColor);
+		vba.render(ruis::matrix4(matrix).translate(p0), this->grabbedColor);
 	}
 }
 
-bool WireArea::on_mouse_move(const morda::mouse_move_event& e) {
+bool WireArea::on_mouse_move(const ruis::mouse_move_event& e) {
 	if(this->grabbedSocket){
 		this->mousePos = e.pos;
 		return this->container::on_mouse_move(
-				morda::mouse_move_event{
+				ruis::mouse_move_event{
 					e.pos,
 					e.pointer_id,
 					true

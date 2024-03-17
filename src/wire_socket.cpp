@@ -2,18 +2,18 @@
 
 #include "wire_area.hpp"
 
-#include <morda/util/util.hpp>
+#include <ruis/util/util.hpp>
 
-WireSocket::WireSocket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		morda::widget(std::move(c), desc)
+WireSocket::WireSocket(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+		ruis::widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
-		if(!morda::is_property(p)){
+		if(!ruis::is_property(p)){
 			continue;
 		}
 
 		if(p.value == "outlet"){
-			auto v = morda::get_property_value(p);
+			auto v = ruis::get_property_value(p);
 			if(v == "left"){
 				this->outlet_v = Outlet_e::LEFT;
 			}else if(v == "right"){
@@ -60,34 +60,34 @@ void WireSocket::disconnect() {
 
 
 
-std::array<morda::vector2, 2> WireSocket::outletPos() const noexcept{
-	morda::vector2 dir;
-	morda::vector2 pos;
+std::array<ruis::vector2, 2> WireSocket::outletPos() const noexcept{
+	ruis::vector2 dir;
+	ruis::vector2 pos;
 	switch(this->outlet_v){
 		default:
 			ASSERT(false)
 		case Outlet_e::BOTTOM:
-			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0.5, 1));
-			dir = morda::vector2(0, 1);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0.5, 1));
+			dir = ruis::vector2(0, 1);
 			break;
 		case Outlet_e::LEFT:
-			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0, 0.5));
-			dir = morda::vector2(-1, 0);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0, 0.5));
+			dir = ruis::vector2(-1, 0);
 			break;
 		case Outlet_e::RIGHT:
-			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(1, 0.5));
-			dir = morda::vector2(1, 0);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(1, 0.5));
+			dir = ruis::vector2(1, 0);
 			break;
 		case Outlet_e::TOP:
-			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0.5, 0));
-			dir = morda::vector2(0, -1);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0.5, 0));
+			dir = ruis::vector2(0, -1);
 			break;
 	}
 	return {{pos, dir}};
 }
 
-bool WireSocket::on_mouse_button(const morda::mouse_button_event& e) {
-	if(e.button != morda::mouse_button::left){
+bool WireSocket::on_mouse_button(const ruis::mouse_button_event& e) {
+	if(e.button != ruis::mouse_button::left){
 		return false;
 	}
 	
@@ -112,7 +112,7 @@ bool WireSocket::on_mouse_button(const morda::mouse_button_event& e) {
 	return false;
 }
 
-void WireSocket::on_hover_change(unsigned pointerID) {
+void WireSocket::on_hovered_change(unsigned pointerID) {
 	// TRACE(<< "Hover changed: " << this->is_hovered() << " " << this << std::endl)
 	if(auto wa = this->try_get_ancestor<WireArea>()){
 		if(this->is_hovered()){

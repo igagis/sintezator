@@ -1,10 +1,10 @@
 #include "Block.hpp"
 
-#include <morda/widgets/label/nine_patch.hpp>
-#include <morda/widgets/proxy/mouse_proxy.hpp>
+#include <ruis/widgets/label/nine_patch.hpp>
+#include <ruis/widgets/proxy/mouse_proxy.hpp>
 
 namespace{
-const auto blockLayout_c = treeml::read(R"qwertyuiop(
+const auto blockLayout_c = tml::read(R"qwertyuiop(
 	layout{pile}
 	@mouse_proxy{
 		id{mouseProxy}
@@ -13,28 +13,28 @@ const auto blockLayout_c = treeml::read(R"qwertyuiop(
 	@nine_patch{
 		id{ninePatch}
 
-		image{morda_npt_window_bg}
+		image{ruis_npt_window_bg}
 
-		left{${morda_window_border_size}}
-		top{${morda_window_border_size}}
-		right{${morda_window_border_size}}
-		bottom{${morda_window_border_size}}
+		left{${ruis_window_border_size}}
+		top{${ruis_window_border_size}}
+		right{${ruis_window_border_size}}
+		bottom{${ruis_window_border_size}}
 	}
 )qwertyuiop");
 }
 
 
-Block::Block(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		morda::widget(std::move(c), desc),
-		morda::container(this->context, blockLayout_c),
-		content(this->get_widget_as<morda::nine_patch>("ninePatch").content())
+Block::Block(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+		ruis::widget(std::move(c), desc),
+		ruis::container(this->context, blockLayout_c),
+		content(this->get_widget_as<ruis::nine_patch>("ninePatch").content())
 {
 	this->content.push_back_inflate(desc);
 	
-	auto& mp = this->get_widget_as<morda::mouse_proxy>("mouseProxy");
+	auto& mp = this->get_widget_as<ruis::mouse_proxy>("mouseProxy");
 	
-	mp.mouse_button_handler = [this](morda::mouse_proxy& widget, const morda::mouse_button_event& e){
-		if(e.button != morda::mouse_button::left){
+	mp.mouse_button_handler = [this](ruis::mouse_proxy& widget, const ruis::mouse_button_event& e){
+		if(e.button != ruis::mouse_button::left){
 			return false;
 		}
 
@@ -47,7 +47,7 @@ Block::Block(const utki::shared_ref<morda::context>& c, const treeml::forest& de
 		return false;
 	};
 	
-	mp.mouse_move_handler = [this](morda::mouse_proxy& w, const morda::mouse_move_event& e){
+	mp.mouse_move_handler = [this](ruis::mouse_proxy& w, const ruis::mouse_move_event& e){
 		if(this->captured){
 			this->move_by(e.pos - this->capturePoint);
 			return true;

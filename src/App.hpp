@@ -1,10 +1,10 @@
 #pragma once
 
-#include <mordavokne/application.hpp>
+#include <ruisapp/application.hpp>
 
 #include "wire_area.hpp"
 
-class App : public mordavokne::application{
+class App : public ruisapp::application{
 public:	
 	App();
 };

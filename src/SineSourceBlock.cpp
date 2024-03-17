@@ -2,7 +2,7 @@
 #include "Socket.hpp"
 
 namespace{
-const auto layout_c = treeml::read(R"qwertyuiop(
+const auto layout_c = tml::read(R"qwertyuiop(
 	@column{
 		@text{
 			text{"Sine Wave"}
@@ -18,7 +18,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 )qwertyuiop");
 }
 
-SineSourceBlock::SineSourceBlock(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+SineSourceBlock::SineSourceBlock(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(std::move(c), desc),
 		Block(this->context, layout_c),
 		source(std::make_shared<SineSource>(440)),

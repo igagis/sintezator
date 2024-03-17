@@ -1,8 +1,8 @@
 #pragma once
 
-#include <morda/widget.hpp>
+#include <ruis/widgets/widget.hpp>
 
-class WireSocket : virtual public morda::widget{
+class WireSocket : virtual public ruis::widget{
 	friend class WireArea;
 
 	unsigned groupId;
@@ -24,7 +24,7 @@ public:
 	WireSocket& operator=(const WireSocket&) = delete;
 
 protected:
-	WireSocket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	WireSocket(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 	
 	std::shared_ptr<WireSocket> getRemote();
 public:
@@ -45,14 +45,14 @@ public:
 	 * @return Array of two vectors. First is the position of the outlet within the widget.
 	 *         Second is the unit vector of outlet wire direction.
 	 */
-	std::array<morda::vector2, 2> outletPos()const noexcept;
+	std::array<ruis::vector2, 2> outletPos()const noexcept;
 
 	void connect(const std::shared_ptr<WireSocket>& o = nullptr);
 	void disconnect();
 
-	bool on_mouse_button(const morda::mouse_button_event& event)override;
+	bool on_mouse_button(const ruis::mouse_button_event& event)override;
 
-	void on_hover_change(unsigned pointerID) override;
+	void on_hovered_change(unsigned pointerID) override;
 	
 	/**
 	 * @brief Connection event callback.
