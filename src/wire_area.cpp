@@ -5,7 +5,7 @@
 #include <ruis/context.hpp>
 #include <ruis/util/util.hpp>
 
-#include <ruis/layouts/layout.hpp>
+#include <ruis/layout/layout.hpp>
 
 namespace{
 const ruis::real antialiasWidth_c = ruis::real(0.55f);

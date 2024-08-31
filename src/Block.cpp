@@ -1,7 +1,7 @@
 #include "Block.hpp"
 
-#include <ruis/widgets/label/nine_patch.hpp>
-#include <ruis/widgets/proxy/mouse_proxy.hpp>
+#include <ruis/widget/label/nine_patch.hpp>
+#include <ruis/widget/proxy/mouse_proxy.hpp>
 
 namespace{
 const auto blockLayout_c = tml::read(R"qwertyuiop(
